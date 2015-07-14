@@ -15,7 +15,8 @@ namespace SwitcherUi.switching
 
     interface ISwitch
     {
-        String Name { get; }
+        string Name { get; }
         SwitchResult SwitchTo(Project project);
+        SwitchResult MakeReadyForConfig();
     }
 }

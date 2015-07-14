@@ -45,6 +45,8 @@
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.avoidProcessesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.substDriveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.javaHomeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.contextMenuStrip1.SuspendLayout();
             this.tabControlLogs.SuspendLayout();
             this.pageIssues.SuspendLayout();
@@ -66,12 +68,12 @@
             this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.restoreToolStripMenuItem});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(133, 30);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(127, 26);
             // 
             // restoreToolStripMenuItem
             // 
             this.restoreToolStripMenuItem.Name = "restoreToolStripMenuItem";
-            this.restoreToolStripMenuItem.Size = new System.Drawing.Size(132, 26);
+            this.restoreToolStripMenuItem.Size = new System.Drawing.Size(126, 22);
             this.restoreToolStripMenuItem.Text = "Restore";
             this.restoreToolStripMenuItem.Click += new System.EventHandler(this.restoreToolStripMenuItem_Click);
             // 
@@ -121,7 +123,7 @@
             this.pageSwitchLog.Location = new System.Drawing.Point(4, 25);
             this.pageSwitchLog.Name = "pageSwitchLog";
             this.pageSwitchLog.Padding = new System.Windows.Forms.Padding(3);
-            this.pageSwitchLog.Size = new System.Drawing.Size(1110, 493);
+            this.pageSwitchLog.Size = new System.Drawing.Size(1110, 474);
             this.pageSwitchLog.TabIndex = 1;
             this.pageSwitchLog.Text = "Switch Log";
             this.pageSwitchLog.UseVisualStyleBackColor = true;
@@ -172,7 +174,7 @@
             this.settingsToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1142, 26);
+            this.menuStrip1.Size = new System.Drawing.Size(1142, 28);
             this.menuStrip1.TabIndex = 10;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -185,7 +187,9 @@
             // settingsToolStripMenuItem
             // 
             this.settingsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.avoidProcessesToolStripMenuItem});
+            this.avoidProcessesToolStripMenuItem,
+            this.substDriveToolStripMenuItem,
+            this.javaHomeToolStripMenuItem});
             this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
             this.settingsToolStripMenuItem.Size = new System.Drawing.Size(71, 24);
             this.settingsToolStripMenuItem.Text = "Settings";
@@ -196,6 +200,20 @@
             this.avoidProcessesToolStripMenuItem.Size = new System.Drawing.Size(187, 26);
             this.avoidProcessesToolStripMenuItem.Text = "Avoid Processes";
             this.avoidProcessesToolStripMenuItem.Click += new System.EventHandler(this.avoidProcessesToolStripMenuItem_Click);
+            // 
+            // substDriveToolStripMenuItem
+            // 
+            this.substDriveToolStripMenuItem.Name = "substDriveToolStripMenuItem";
+            this.substDriveToolStripMenuItem.Size = new System.Drawing.Size(187, 26);
+            this.substDriveToolStripMenuItem.Text = "Subst Drive";
+            this.substDriveToolStripMenuItem.Click += new System.EventHandler(this.substDriveToolStripMenuItem_Click);
+            // 
+            // javaHomeToolStripMenuItem
+            // 
+            this.javaHomeToolStripMenuItem.Name = "javaHomeToolStripMenuItem";
+            this.javaHomeToolStripMenuItem.Size = new System.Drawing.Size(187, 26);
+            this.javaHomeToolStripMenuItem.Text = "Java Home";
+            this.javaHomeToolStripMenuItem.Click += new System.EventHandler(this.javaHomeToolStripMenuItem_Click);
             // 
             // SwitcherMainForm
             // 
@@ -240,6 +258,8 @@
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem settingsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem avoidProcessesToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem substDriveToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem javaHomeToolStripMenuItem;
     }
 }
 

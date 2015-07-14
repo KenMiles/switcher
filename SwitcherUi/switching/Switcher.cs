@@ -89,5 +89,10 @@ namespace SwitcherUi.switching
             return new SwitchedResult(project, _switchers.Select(s => s.SwitchTo(project)).ToArray());
         }
 
+        public SwitchedResult MakeReadyForConfig()
+        {
+            return new SwitchedResult(null, _switchers.Select(s => s.MakeReadyForConfig()).ToArray());
+        }
+
     }
 }

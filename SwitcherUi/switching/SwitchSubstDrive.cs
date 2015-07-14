@@ -43,14 +43,16 @@ namespace SwitcherUi.switching
         private string RootPath { get { return settings.Value(RootPathSettingName, "c:\temp"); } }
         private bool Enabled { get { return settings.ContainsKey(DriveLetterSettingName); } }
 
+        internal bool RemoveDrive() {
+            if (!Directory.Exists(Drive + "\\")) return true;
+            return DefineDosDevice(DDD_REMOVE_DEFINITION, Drive, null);
+        }
+
         public override SwitchResult SwitchTo(Project project)
         {
             if (!Enabled) return new SwitchResult { SourceName = Name, Success = true, Message = "Disabled" };
-            if (Directory.Exists(Drive + "\\")) {
-                if (!DefineDosDevice(DDD_REMOVE_DEFINITION, Drive, null))
-                {
-                    return Result(false, "Unable to remove drive " + Drive);
-                }
+            if (RemoveDrive()) {
+               return Result(false, "Unable to remove drive " + Drive);
             }
             var path = Path.Combine(RootPath, project.Settings.Value("folder", project.Name));
             var exists = Directory.Exists(path);
@@ -64,6 +66,12 @@ namespace SwitcherUi.switching
             }
             var defined = DefineDosDevice(0, Drive, path) ;
             return Result(defined, "{0} Drive '{1}' to Path '{2}' ", defined ? "Set" : "Unable to set", Drive, path);
+        }
+
+        override public SwitchResult MakeReadyForConfig()
+        {
+            var removed = RemoveDrive();
+            return Result(removed, string.Format(removed ? "Drive {0} removed/not susbt": "Unable to remove Drive {0}", Drive) );
         }
     }
 }

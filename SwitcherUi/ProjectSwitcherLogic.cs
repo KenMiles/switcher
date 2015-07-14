@@ -6,9 +6,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace SwitcherUi
 {
+    enum PerformingAction { Switch, Config}
+    public delegate Form CreateConfigForm();
     interface IUserFeedback {
         bool WarningAsk(string subject, string message);
         void ErrorMessage(string subject, string message);
@@ -53,7 +56,7 @@ namespace SwitcherUi
         private string CanSwitchStatusMessage(EnumCanSwitch canSwitch) {
             switch (canSwitch) {
                 case EnumCanSwitch.csYes: return "Can Switch";
-                case EnumCanSwitch.csAfterWarning: return "Please Review issues before switching";
+                case EnumCanSwitch.csAfterWarning: return "Please Review issues before Switching";
                 case EnumCanSwitch.csNo:
                 default: return "Issues Blocking Switching";
             }
@@ -68,34 +71,39 @@ namespace SwitcherUi
             _userFeedback.ShowCanSwitchStatus(status.AllowSwitch, messages);
         }
 
-        private void FailSwitch(string projectName, string reason, params string[] extraInfo) {
-            var description = string.Format("Switching Blocked to '{0}' because {1}", projectName, reason);
+        private void FailSwitch(PerformingAction action, string projectName, string reason, params string[] extraInfo) {
+            var descFmt = action == PerformingAction.Switch ? "Switching Blocked to '{0}' because {1}" : "Configuration Blocked because {1}";
+            var description = string.Format(descFmt, projectName, reason);
             var log = new List<string>() { description };
             log.AddRange(extraInfo);
             _userFeedback.DisplaySwitchLog(log);
         }
 
-        public bool SwitchTo(Project project) {
-            if (project == null)
-            {
-                FailSwitch("Unknown Project", "no project provided");
-                return false;
-            }
+        private bool CheckCanSwitch(PerformingAction action, string projectName) {
             var canSwitch = _canSwitch.CheckCanSwitch();
-            switch (canSwitch.AllowSwitch) {
+            switch (canSwitch.AllowSwitch)
+            {
                 case EnumCanSwitch.csNo:
                     _userFeedback.ErrorMessage("Blocking Processes Running", string.Join("\r\n", canSwitch.Blocking));
-                    FailSwitch(project.Name, "Check Switch", canSwitch.Blocking);
+                    FailSwitch(action, projectName, "Blocking Processes Running", canSwitch.Blocking);
                     return false;
                 case EnumCanSwitch.csAfterWarning:
-                    if (!_userFeedback.WarningAsk("Switch With Applications Running", string.Join("\r\n", canSwitch.Warning))){
-                        FailSwitch(project.Name, "User Checked Warning Applications", canSwitch.Warning);
+                    var title = action == PerformingAction.Switch ? "Switch With Applications Running" : "Configuration With Applications Running";
+                    if (!_userFeedback.WarningAsk(title, string.Join("\r\n", canSwitch.Warning)))
+                    {
+                        FailSwitch(action, projectName, "User Checked Warning Applications", canSwitch.Warning);
                         return false;
                     }
                     break;
             }
+            return true;
+        }
+
+        private bool DoSwitch(Project project)
+        {
             var result = _switcher.SwitchTo(project);
-            if (result.Switched != Switched.Yes) {
+            if (result.Switched != Switched.Yes)
+            {
                 _userFeedback.ErrorMessage(result.MessageTitle(), string.Join("\r\n", result.IssueMessages));
             }
             _userFeedback.DisplaySwitchLog(result.DisplayMessages);
@@ -105,6 +113,19 @@ namespace SwitcherUi
                 _userFeedback.DisplayCurrentProject(project.Name);
             }
             return result.Switched != Switched.No;
+        }
+
+        public bool SwitchTo(Project project) {
+            if (project == null)
+            {
+                FailSwitch(PerformingAction.Switch, "Unknown Project", "no project provided");
+                return false;
+            }
+            if (!CheckCanSwitch(PerformingAction.Switch, project.Name))
+            {
+                return false;
+            }
+            return DoSwitch(project);
         }
 
         private Project Selected(Project[] projects, string projectName) {
@@ -118,6 +139,17 @@ namespace SwitcherUi
             var projects = AllProjects();
             var selected = Selected(projects, current);
             _userFeedback.ListProjects(projects, selected);
+        }
+
+        public void DoConfig(CreateConfigForm CreateConfigForm) {
+            if (!CheckCanSwitch(PerformingAction.Config, "Config"))
+            {
+                return;
+            }
+            var result = _switcher.MakeReadyForConfig();
+            var frm = CreateConfigForm();
+            frm.ShowDialog();
+            DoSwitch(_projectManager.Project(_config.CurrentProject));
         }
 
     }

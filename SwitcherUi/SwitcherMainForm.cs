@@ -15,6 +15,7 @@ using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using System.ServiceProcess;
 using System.IO;
+using SwitcherUi.switching.cfg;
 
 namespace SwitcherUi
 {
@@ -138,12 +139,14 @@ namespace SwitcherUi
         {
             _logic.ReadCurrentProject();
             _logic.CheckCanSwitch();
+
         }
 
         private void timerCheckStatus_Tick(object sender, EventArgs e)
         {
             _logic.CheckCanSwitch();
             showedShowSwitchedLogCount--;
+
         }
 
         private void buttonSwitch_Click(object sender, EventArgs e)
@@ -169,13 +172,22 @@ namespace SwitcherUi
 
         private void avoidProcessesToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var frm = new ProcessesForm(_config);
-            frm.ShowDialog();
+            _logic.DoConfig(() => new ProcessesForm(_config));
         }
 
         private void txtIssuesDisplay_TextChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void substDriveToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            _logic.DoConfig(() => new FrmSubstDriveCfg(_config));
+        }
+
+        private void javaHomeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            _logic.DoConfig(() => new FrmJavaHomeCfg(_config));
         }
     }
 

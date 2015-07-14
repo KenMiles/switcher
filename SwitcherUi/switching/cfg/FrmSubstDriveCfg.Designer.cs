@@ -58,6 +58,7 @@
             this.btnSave.TabIndex = 4;
             this.btnSave.Text = "Save";
             this.btnSave.UseVisualStyleBackColor = true;
+            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
             // label1
             // 
@@ -86,6 +87,7 @@
             this.btnSelectFolder.TabIndex = 8;
             this.btnSelectFolder.Text = "Browse";
             this.btnSelectFolder.UseVisualStyleBackColor = true;
+            this.btnSelectFolder.Click += new System.EventHandler(this.btnSelectFolder_Click);
             // 
             // label2
             // 
@@ -98,12 +100,12 @@
             // 
             // cbDriveLetter
             // 
+            this.cbDriveLetter.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbDriveLetter.FormattingEnabled = true;
             this.cbDriveLetter.Location = new System.Drawing.Point(86, 57);
             this.cbDriveLetter.Name = "cbDriveLetter";
             this.cbDriveLetter.Size = new System.Drawing.Size(63, 24);
             this.cbDriveLetter.TabIndex = 10;
-            this.cbDriveLetter.Text = "Z";
             // 
             // FrmSubstDriveCfg
             // 

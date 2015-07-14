@@ -34,5 +34,10 @@ namespace SwitcherUi.switching
         }
 
         abstract public SwitchResult SwitchTo(Project project);
+
+        virtual public SwitchResult MakeReadyForConfig()
+        {
+            return Result(true, "Not Required");
+        }
     }
 }

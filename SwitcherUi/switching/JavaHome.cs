@@ -32,13 +32,15 @@ namespace SwitcherUi.switching
     class JavaHome : AbstractSwitcher
     {
         private readonly Settings _javaPaths;
-        public JavaHome(Configuration config) : base(config, "JAVA_HOME")
+        internal const string JAVA_HOME = "JAVA_HOME";
+        internal const string JAVA_PATHS = "paths";
+        public JavaHome(Configuration config) : base(config, JAVA_HOME)
         {
-            _javaPaths = config[this, "paths"];
+            _javaPaths = config[this, JAVA_PATHS];
         }
 
         private int Version(string[] versionParts, int index) {
-            if (versionParts.Length > index) return Int32.Parse(versionParts[index]);
+            if (versionParts.Length > index) return int.Parse(versionParts[index]);
             return 0;
         }
 
@@ -126,7 +128,7 @@ namespace SwitcherUi.switching
                     Message = String.Format("Unable to switch to '{0}' as can only find {1}", javaVersion, string.Join(",", jdks.Keys))
                 };
             }
-            EnvironmentVariables.SetEnvironmentVariable("JAVA_HOME", jdks[javaVersion].Path, EnvironmentVariableTarget.Machine);
+            EnvironmentVariables.SetEnvironmentVariable(JAVA_HOME, jdks[javaVersion].Path, EnvironmentVariableTarget.Machine);
             return new SwitchResult {
                 SourceName = Name,
                 Success = true,
