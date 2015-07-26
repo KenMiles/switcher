@@ -95,12 +95,6 @@
     <Compile Include="switching\cfg\FrmJavaHomeCfg.Designer.cs">
       <DependentUpon>FrmJavaHomeCfg.cs</DependentUpon>
     </Compile>
-    <Compile Include="FrmProjectConfig.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="FrmProjectConfig.Designer.cs">
-      <DependentUpon>FrmProjectConfig.cs</DependentUpon>
-    </Compile>
     <Compile Include="switching\cfg\FrmSubstDriveCfg.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -139,9 +133,6 @@
     </Compile>
     <EmbeddedResource Include="switching\cfg\FrmJavaHomeCfg.resx">
       <DependentUpon>FrmJavaHomeCfg.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="FrmProjectConfig.resx">
-      <DependentUpon>FrmProjectConfig.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="switching\cfg\FrmSubstDriveCfg.resx">
       <DependentUpon>FrmSubstDriveCfg.cs</DependentUpon>
