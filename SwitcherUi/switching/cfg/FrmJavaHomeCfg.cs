@@ -19,8 +19,8 @@ namespace SwitcherUi.switching.cfg
         private string _lastValue;
         private string _lastRoot;
         private ListViewItem _changing;
-        private readonly Configuration _config;
-        internal FrmJavaHomeCfg(Configuration config)
+        private readonly IConfiguration _config;
+        internal FrmJavaHomeCfg(IConfiguration config)
         {
             InitializeComponent();
             SetButtonStates();

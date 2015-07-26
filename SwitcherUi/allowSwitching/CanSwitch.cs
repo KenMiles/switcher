@@ -10,7 +10,7 @@ namespace SwitcherUi.allowSwitching
 {
     class CanSwitch
     {
-        private readonly static Type[] _constructorParamTypes = new[] { typeof(Configuration) };
+        private readonly static Type[] _constructorParamTypes = new[] { typeof(IConfiguration) };
 
         private readonly ICanSwitch[] _canSwitches;
         internal CanSwitch(ICanSwitch[] canSwitches)
@@ -18,7 +18,7 @@ namespace SwitcherUi.allowSwitching
             _canSwitches = canSwitches;
         }
 
-        public CanSwitch(Configuration config): this(LoadImplementers.Load<ICanSwitch>(config)){
+        public CanSwitch(IConfiguration config): this(LoadImplementers.Load<ICanSwitch>(config)){
         }
 
         internal EnumCanSwitch Highest(CanSwitchResult[] results) {

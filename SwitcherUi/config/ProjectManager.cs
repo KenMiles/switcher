@@ -8,8 +8,8 @@ namespace SwitcherUi.config
 {
     class ProjectManager
     {
-        private Configuration _config;
-        public ProjectManager(Configuration config) {
+        private IConfiguration _config;
+        public ProjectManager(IConfiguration config) {
             _config = config;
         }
 

@@ -9,9 +9,9 @@ namespace SwitcherUi.helpers
 {
     class LoadImplementers 
     {
-        private readonly static Type[] _constructorParamTypes = new[] { typeof(Configuration) };
+        private readonly static Type[] _constructorParamTypes = new[] { typeof(IConfiguration) };
 
-        internal static Object Create(Type type, Configuration config)
+        internal static Object Create(Type type, IConfiguration config)
         {
             var construtor = type.GetConstructor(_constructorParamTypes);
             if (construtor != null) return construtor.Invoke(new Object[] { config });
@@ -20,7 +20,7 @@ namespace SwitcherUi.helpers
             throw new Exception("Unable to create " + type.Name);
         }
 
-        public static T[] Load<T>(Configuration config) {
+        public static T[] Load<T>(IConfiguration config) {
             var type = typeof(T);
             return AppDomain.CurrentDomain.GetAssemblies()
                 .SelectMany(s => s.GetTypes())

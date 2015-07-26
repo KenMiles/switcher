@@ -12,10 +12,10 @@ namespace SwitcherUi.config
 {
     delegate Dictionary<string, string> DefaultDictionay();
     delegate void Update(IniData ini);
-    class ConfigurationImpl : Configuration
+    class ConfigurationImpl : IConfiguration
     {
-        private readonly FileIniDataParser parser = new FileIniDataParser();
-        private readonly string iniFileName;
+        private readonly FileIniDataParser _parser = new FileIniDataParser();
+        private readonly string _iniFileName;
         private IniData ini;
         private const string BlockingProcessSection = "blocking-processes";
         private const string WarningProcessSection = "warning-processes";
@@ -23,7 +23,7 @@ namespace SwitcherUi.config
         private void DoUpdate(Update updates) {
             RefreshConfig();
             updates(ini);
-            parser.WriteFile(iniFileName, ini);
+            _parser.WriteFile(_iniFileName, ini);
             //RefreshConfig();
         }
 
@@ -48,12 +48,17 @@ namespace SwitcherUi.config
         }
 
         private void RefreshConfig() {
-          ini = File.Exists(iniFileName) ? parser.ReadFile(iniFileName) : new IniData();
+          ini = File.Exists(_iniFileName) ? _parser.ReadFile(_iniFileName) : new IniData();
         }
+
         public ConfigurationImpl(CommandArguments args)
         {
-            iniFileName = args.AsString("cfg", DefaultConfigFileName());
+            _iniFileName = args.AsString("cfg", DefaultConfigFileName());
             RefreshConfig();
+        }
+
+        public ConfigurationImpl() : this(new CommandArguments(Environment.GetCommandLineArgs()))
+        {
         }
 
         private Dictionary<string, string> CaseInsensitiveDictionary(Dictionary<string, string> source) {

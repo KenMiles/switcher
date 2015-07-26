@@ -24,13 +24,13 @@ namespace SwitcherUi
 
     class ProjectSwitcherLogic
     {
-        private readonly Configuration _config;
+        private readonly IConfiguration _config;
         private readonly ProjectManager _projectManager;
         private readonly CanSwitch _canSwitch;
         private readonly Switcher _switcher;
         private readonly IUserFeedback _userFeedback;
 
-        internal ProjectSwitcherLogic(Configuration config, ProjectManager projectManager, Switcher switcher, CanSwitch canSwitch, IUserFeedback userFeedback)
+        internal ProjectSwitcherLogic(IConfiguration config, ProjectManager projectManager, Switcher switcher, CanSwitch canSwitch, IUserFeedback userFeedback)
         {
             _config = config;
             _projectManager = projectManager;
@@ -38,7 +38,7 @@ namespace SwitcherUi
             _switcher = switcher;
             _userFeedback = userFeedback;
         }
-        public ProjectSwitcherLogic(Configuration config, IUserFeedback userFeedback) : 
+        public ProjectSwitcherLogic(IConfiguration config, IUserFeedback userFeedback) : 
             this(config, new ProjectManager(config), new Switcher(config), new CanSwitch(config), userFeedback)
         {
         }

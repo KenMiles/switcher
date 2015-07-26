@@ -15,8 +15,8 @@ namespace SwitcherUi
 {
     public partial class ProcessesForm : Form
     {
-        private readonly Configuration _config;
-        internal ProcessesForm(Configuration config)
+        private readonly IConfiguration _config;
+        internal ProcessesForm(IConfiguration config)
         {
             _config = config;
             InitializeComponent();

@@ -9,7 +9,7 @@ namespace SwitcherUi.switching
 {
     class EnvironmentVariables : AbstractSwitcher
     {
-        public EnvironmentVariables(Configuration config) : base(config, "Environment Variables") {
+        public EnvironmentVariables(IConfiguration config) : base(config, "Environment Variables") {
         }
 
         public static void SetEnvironmentVariable(string name, string value, EnvironmentVariableTarget target)
