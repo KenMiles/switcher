@@ -18,13 +18,20 @@ namespace SwitcherUi.switching
         public int ReleaseVersion { get; set; }
         public string Suffix { get; set; }
 
+        public string MajorVersion {
+            get
+            {
+                string fmt = MajorVersionPt2 <= 4 ? "{0}.{1}" : "{1}";
+                return string.Format(fmt, MajorVersionPt1, MajorVersionPt2);
+            }
+            }
+
         public string EnvironmentVariable
         {
             get
             {
                 string suffix = string.IsNullOrWhiteSpace(Suffix) ? "" : "_" + Suffix.Trim();
-                string fmt = MajorVersionPt2 <= 4 ? "JAVA_{0}.{1}{2}" : "JAVA_{1}{2}";
-                return string.Format(fmt, MajorVersionPt1, MajorVersionPt2, suffix);
+                return $"JAVA_{MajorVersion}{suffix}";
             }
         }
     }
@@ -34,7 +41,7 @@ namespace SwitcherUi.switching
         private readonly Settings _javaPaths;
         internal const string JAVA_HOME = "JAVA_HOME";
         internal const string JAVA_PATHS = "paths";
-        public JavaHome(Configuration config) : base(config, JAVA_HOME)
+        public JavaHome(IConfiguration config) : base(config, JAVA_HOME)
         {
             _javaPaths = config[this, JAVA_PATHS];
         }
@@ -57,7 +64,7 @@ namespace SwitcherUi.switching
             };
         }
 
-        private IEnumerable<JavaJdk> Jdks(string path, string suffix) {
+        private IEnumerable<JavaJdk> FindJdks(string path, string suffix) {
             if (string.IsNullOrWhiteSpace(path) || !Directory.Exists(path)) return new JavaJdk[0];
             var jdkDirs = Directory.GetDirectories(path, "jdk*");
             return jdkDirs.Select(f => JavaJdk(f, suffix)).Where(j => j != null);
@@ -68,20 +75,26 @@ namespace SwitcherUi.switching
             return Path.Combine(Environment.GetEnvironmentVariable(environmentVariable), "java");
         }
 
-        private JavaJdk[] Jdks() {
-            var other = _javaPaths.Values.Select(s => Jdks(s.Key, s.Value)).SelectMany(j => j);
-            return Jdks(ProgramFilesPath(false), "").Concat(Jdks(ProgramFilesPath(true), "32BIT")).Concat(other).ToArray();
+        private JavaJdk[] FindJdks() {
+            var other = _javaPaths.Values.Select(s => FindJdks(s.Key, s.Value)).SelectMany(j => j);
+            return FindJdks(ProgramFilesPath(false), "").Concat(FindJdks(ProgramFilesPath(true), "32BIT")).Concat(other).ToArray();
         }
 
-        private Dictionary<string, JavaJdk> FindLatest() {
-            var jdks = Jdks().GroupBy(j => j.EnvironmentVariable).Select(g => g.OrderByDescending(j => j.MinorVersion).ThenBy(j => j.ReleaseVersion).Take(1));
+        private JavaJdk[] _jdks;
+        public JavaJdk[] Jdks { get { return _jdks = _jdks ?? FindJdks(); } }
+
+        private Dictionary<string, JavaJdk> BuildLatestJdkList() {
+            var jdks = Jdks.GroupBy(j => j.EnvironmentVariable).Select(g => g.OrderByDescending(j => j.MinorVersion).ThenBy(j => j.ReleaseVersion).Take(1));
             return jdks.SelectMany(j => j).ToDictionary(k => k.EnvironmentVariable, v => v, StringComparer.OrdinalIgnoreCase);
         }
 
+        private Dictionary<string, JavaJdk> _latestJdk;
+        public Dictionary<string, JavaJdk> LatestJdk { get { return _latestJdk = _latestJdk ?? BuildLatestJdkList();} }
 
-        private void SetVersionEnvironmentVariable(Dictionary<string, JavaJdk> latest)
+
+        private void SetVersionEnvironmentVariable()
         {
-            foreach (var k in latest) {
+            foreach (var k in LatestJdk) {
                 EnvironmentVariables.SetEnvironmentVariable(k.Key, k.Value.Path, EnvironmentVariableTarget.Machine);
             }
         }
@@ -104,13 +117,38 @@ namespace SwitcherUi.switching
             CleanUpJavaVersionEnvironmentVariables(EnvironmentVariableTarget.Machine, false);
         }
 
+        class DesiredJavaVersionSearchResult
+        {
+            public string JavaVersion { get; set; }
+            public List<string> TriedVersions = new List<string>();
+            public bool Found => string.IsNullOrWhiteSpace((JavaVersion));
+            public string Message() {
+                var notFound = TriedVersions.Count == 0 ? "" : "Unable to find JDKS for " + string.Join(", ", TriedVersions);
+                if (Found) return $"Switched JAVA_HOME to '{JavaVersion}' {notFound}".Trim();
+                return notFound;
+            }
+        }
+
+        private DesiredJavaVersionSearchResult FindBestMatch(string[] javaVersions)
+        {
+            var checkedList = new  List<string>();
+            foreach (var javaVersion in javaVersions)
+            {
+                if (LatestJdk.ContainsKey((javaVersion)))
+                {
+                    return new DesiredJavaVersionSearchResult {JavaVersion = javaVersion, TriedVersions = checkedList};
+                }
+                checkedList.Add(javaVersion);
+            }
+            return new DesiredJavaVersionSearchResult { JavaVersion = null, TriedVersions = checkedList };
+        }
+
         public override SwitchResult SwitchTo(Project project)
         {
-            var jdks = FindLatest();
-            SetVersionEnvironmentVariable(jdks);
+            SetVersionEnvironmentVariable();
             CleanUpJavaVersionEnvironmentVariables();
-            var javaVersion = project.Settings["java"];
-            if (string.IsNullOrWhiteSpace(javaVersion))
+            var javaVersions = project.Settings.ArrayValue("JAVA");
+            if (javaVersions == null || javaVersions.Length ==0)
             {
                 return new SwitchResult
                 {
@@ -119,21 +157,17 @@ namespace SwitcherUi.switching
                     Message = "No Java Version Defined for Project"
                 };
             }
-            if (!jdks.ContainsKey(javaVersion))
+            var desiredFound = FindBestMatch(javaVersions);
+            if (!desiredFound.Found)
             {
-                return new SwitchResult
+                EnvironmentVariables.SetEnvironmentVariable(JAVA_HOME, LatestJdk[desiredFound.JavaVersion].Path, EnvironmentVariableTarget.Machine);
+            }
+            return new SwitchResult
                 {
                     SourceName = Name,
-                    Success = false,
-                    Message = String.Format("Unable to switch to '{0}' as can only find {1}", javaVersion, string.Join(",", jdks.Keys))
+                    Success = desiredFound.Found,
+                    Message = desiredFound.Message()
                 };
-            }
-            EnvironmentVariables.SetEnvironmentVariable(JAVA_HOME, jdks[javaVersion].Path, EnvironmentVariableTarget.Machine);
-            return new SwitchResult {
-                SourceName = Name,
-                Success = true,
-                Message = String.Format("Switched JAVA_HOME to '{0}'", javaVersion)
-            };
         }
     }
 }

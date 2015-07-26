@@ -12,7 +12,7 @@ namespace SwitcherUi.switching
     class SwitchSubstDrive : AbstractSwitcher
     {
         internal const string SwitcherName = "Substitute Drive";
-        public SwitchSubstDrive(Configuration config): base(config, SwitcherName)
+        public SwitchSubstDrive(IConfiguration config): base(config, SwitcherName)
         {
         }
 

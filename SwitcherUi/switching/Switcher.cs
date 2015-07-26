@@ -82,7 +82,7 @@ namespace SwitcherUi.switching
             _switchers = switcher;
         }
 
-        public Switcher(Configuration config): this(LoadImplementers.Load<ISwitch>(config)) {
+        public Switcher(IConfiguration config): this(LoadImplementers.Load<ISwitch>(config)) {
         }
 
         public SwitchedResult SwitchTo(Project project) {

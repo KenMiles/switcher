@@ -14,8 +14,8 @@ namespace SwitcherUi.switching.cfg
 {
     public partial class FrmSubstDriveCfg : Form
     {
-        private readonly Configuration _config;
-        internal FrmSubstDriveCfg(Configuration config)
+        private readonly IConfiguration _config;
+        internal FrmSubstDriveCfg(IConfiguration config)
         {
             _config = config;
             InitializeComponent();

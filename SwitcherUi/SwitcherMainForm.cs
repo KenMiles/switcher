@@ -26,19 +26,19 @@ namespace SwitcherUi
             Text = "Current Project " + project;
         }
 
-        private string[] seperator = new[] { "", "----------", "" };
+        private readonly string[] _seperator = new[] { "", "----------", "" };
         public void DisplaySwitchLog(IEnumerable<string> logEntry)
         {
             var log = new List<string>() { DateTime.Now.ToShortTimeString(), "" };
             log.AddRange(logEntry);
             if (switchLog.Lines.Length > 1)
             {
-                log.AddRange(seperator);
+                log.AddRange(_seperator);
                 log.AddRange(switchLog.Lines);
             }
             switchLog.Lines = log.ToArray();
             tabControlLogs.SelectedTab = pageSwitchLog;
-            showedShowSwitchedLogCount = 20;
+            _showedShowSwitchedLogCount = 20;
         }
 
         public void ErrorMessage(string subject, string message)
@@ -66,19 +66,19 @@ namespace SwitcherUi
             return DefaultBackColor;
         }
 
-        private int showedShowSwitchedLogCount = 0;
+        private int _showedShowSwitchedLogCount = 0;
         public void ShowCanSwitchStatus(EnumCanSwitch status, string[] messages)
         {
             BackColor = CanSwitchStatusColor(status);
             //txtIssuesDisplay.BackColor = BackColor;
             txtIssuesDisplay.Lines = messages;
-            if (showedShowSwitchedLogCount <= 0 && status != EnumCanSwitch.csYes)
+            if (_showedShowSwitchedLogCount <= 0 && status != EnumCanSwitch.csYes)
             {
                 tabControlLogs.SelectedTab = pageIssues;
             }
         }
 
-        private readonly Configuration _config; 
+        private readonly IConfiguration _config; 
         private readonly ProjectSwitcherLogic _logic;
         public SwitcherMainForm()
         {
@@ -145,7 +145,7 @@ namespace SwitcherUi
         private void timerCheckStatus_Tick(object sender, EventArgs e)
         {
             _logic.CheckCanSwitch();
-            showedShowSwitchedLogCount--;
+            _showedShowSwitchedLogCount--;
 
         }
 
@@ -158,7 +158,7 @@ namespace SwitcherUi
         {
             if (tabControlLogs.SelectedTab == pageSwitchLog)
             {
-                showedShowSwitchedLogCount = 20;
+                _showedShowSwitchedLogCount = 20;
             }
         }
 
@@ -166,7 +166,7 @@ namespace SwitcherUi
         {
             if (tabControlLogs.SelectedTab == pageSwitchLog)
             {
-                showedShowSwitchedLogCount = 20;
+                _showedShowSwitchedLogCount = 20;
             }
         }
 
@@ -188,6 +188,23 @@ namespace SwitcherUi
         private void javaHomeToolStripMenuItem_Click(object sender, EventArgs e)
         {
             _logic.DoConfig(() => new FrmJavaHomeCfg(_config));
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            var project = (Project) cbProject.SelectedItem;
+            if (project == null)
+            {
+                MessageBox.Show("No Project Selelected");
+                return;
+            }
+            var frm = new ProjectConfigForm(_config, project);
+            if (frm.ShowDialog() == DialogResult.OK && project.Name == _config.CurrentProject &&
+                MessageBox.Show("Current Project configuration has been changed, update enviroment?",
+                    "Update Enviroment", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            {
+                _logic.SwitchTo(project);
+            }
         }
     }
 

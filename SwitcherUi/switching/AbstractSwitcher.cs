@@ -9,7 +9,7 @@ namespace SwitcherUi.switching
 {
     abstract class AbstractSwitcher : ISwitch
     {
-        protected readonly Configuration config;
+        protected readonly IConfiguration config;
         protected readonly Settings settings;
         private readonly string _name;
 
@@ -27,7 +27,7 @@ namespace SwitcherUi.switching
             return Result(success, string.Format(messageFmt, args));
         }
 
-        protected AbstractSwitcher(Configuration config, string name) {
+        protected AbstractSwitcher(IConfiguration config, string name) {
             _name = name;
             this.config = config;
             settings = config[this];

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace SwitcherUi.config
 {
-    interface Configuration
+    public interface IConfiguration
     {
         Settings BlockingProcesses { get; set; }
         Settings WarningProcesses { get; set; }

@@ -29,11 +29,23 @@ namespace SwitcherUi.config
             return defaultValue;
         }
 
+        public string[] ArrayValue(string key, string defaultValues = "")
+        {
+            if (_settings.ContainsKey(key)) return (_settings[key]??"").Split(';');
+            return (defaultValues??"").Split(';');
+        }
+
+        public void SetArrayValue(string key, string[] value)
+        {
+            this[key] = string.Join(";", value);
+        }
+
         public string this[string key]
         {
             get { return Value(key); }
+            set { _settings[key] = value; }
         }
 
-        public Dictionary<String, String> Values { get { return _settings; } }
+        public Dictionary<string, string> Values => _settings;
     }
 }

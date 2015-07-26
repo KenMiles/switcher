@@ -66,11 +66,17 @@
       <DependentUpon>ProcessesForm.cs</DependentUpon>
     </Compile>
     <Compile Include="config\CommandArguments.cs" />
-    <Compile Include="config\Configuration.cs" />
+    <Compile Include="config\IConfiguration.cs" />
     <Compile Include="config\ConfigurationImpl.cs" />
     <Compile Include="config\Project.cs" />
     <Compile Include="config\ProjectManager.cs" />
     <Compile Include="config\Settings.cs" />
+    <Compile Include="ProjectConfigForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ProjectConfigForm.Designer.cs">
+      <DependentUpon>ProjectConfigForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="SwitcherMainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -95,6 +101,13 @@
     <Compile Include="switching\cfg\FrmSubstDriveCfg.Designer.cs">
       <DependentUpon>FrmSubstDriveCfg.cs</DependentUpon>
     </Compile>
+    <Compile Include="switching\cfg\IProjectItem.cs" />
+    <Compile Include="switching\cfg\ProjectJavaSettings.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="switching\cfg\ProjectJavaSettings.Designer.cs">
+      <DependentUpon>ProjectJavaSettings.cs</DependentUpon>
+    </Compile>
     <Compile Include="switching\EnvironmentVariables.cs" />
     <Compile Include="switching\ISwitch.cs" />
     <Compile Include="switching\JavaHome.cs" />
@@ -102,6 +115,9 @@
     <Compile Include="switching\SwitchSubstDrive.cs" />
     <EmbeddedResource Include="allowSwitching\cfg\ProcessesForm.resx">
       <DependentUpon>ProcessesForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ProjectConfigForm.resx">
+      <DependentUpon>ProjectConfigForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="SwitcherMainForm.resx">
       <DependentUpon>SwitcherMainForm.cs</DependentUpon>
@@ -120,6 +136,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="switching\cfg\FrmSubstDriveCfg.resx">
       <DependentUpon>FrmSubstDriveCfg.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="switching\cfg\ProjectJavaSettings.resx">
+      <DependentUpon>ProjectJavaSettings.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="LICENSE" />
     <None Include="packages.config" />

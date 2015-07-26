@@ -10,8 +10,8 @@ namespace SwitcherUi.allowSwitching
 {
     class CheckRunningProcesses : ICanSwitch
     {
-        private readonly Configuration _config;
-        public CheckRunningProcesses(Configuration config) {
+        private readonly IConfiguration _config;
+        public CheckRunningProcesses(IConfiguration config) {
             _config = config;
         }
 
