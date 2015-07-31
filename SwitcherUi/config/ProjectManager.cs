@@ -20,6 +20,12 @@ namespace SwitcherUi.config
             };
         }
 
+        public void RefreshProject(Project project)
+        {
+            if (project == null) return;
+            project.Settings = _config[project.Name];
+        }
+
         public Project[] Projects()
         {
             return _config.ProjectNames.Select(Project).OrderBy(p => p.Name.ToUpper()).ToArray();

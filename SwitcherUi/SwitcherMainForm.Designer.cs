@@ -47,7 +47,7 @@
             this.avoidProcessesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.substDriveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.javaHomeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.button1 = new System.Windows.Forms.Button();
+            this.btnConfigureProject = new System.Windows.Forms.Button();
             this.contextMenuStrip1.SuspendLayout();
             this.tabControlLogs.SuspendLayout();
             this.pageIssues.SuspendLayout();
@@ -86,7 +86,7 @@
             this.tabControlLogs.Controls.Add(this.pageIssues);
             this.tabControlLogs.Controls.Add(this.pageSwitchLog);
             this.tabControlLogs.Location = new System.Drawing.Point(9, 81);
-            this.tabControlLogs.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tabControlLogs.Margin = new System.Windows.Forms.Padding(2);
             this.tabControlLogs.Name = "tabControlLogs";
             this.tabControlLogs.SelectedIndex = 0;
             this.tabControlLogs.Size = new System.Drawing.Size(838, 409);
@@ -98,9 +98,9 @@
             // 
             this.pageIssues.Controls.Add(this.txtIssuesDisplay);
             this.pageIssues.Location = new System.Drawing.Point(4, 22);
-            this.pageIssues.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.pageIssues.Margin = new System.Windows.Forms.Padding(2);
             this.pageIssues.Name = "pageIssues";
-            this.pageIssues.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.pageIssues.Padding = new System.Windows.Forms.Padding(2);
             this.pageIssues.Size = new System.Drawing.Size(830, 383);
             this.pageIssues.TabIndex = 0;
             this.pageIssues.Text = "Issues";
@@ -112,7 +112,7 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtIssuesDisplay.Location = new System.Drawing.Point(4, 5);
-            this.txtIssuesDisplay.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.txtIssuesDisplay.Margin = new System.Windows.Forms.Padding(2);
             this.txtIssuesDisplay.Multiline = true;
             this.txtIssuesDisplay.Name = "txtIssuesDisplay";
             this.txtIssuesDisplay.ReadOnly = true;
@@ -125,9 +125,9 @@
             // 
             this.pageSwitchLog.Controls.Add(this.switchLog);
             this.pageSwitchLog.Location = new System.Drawing.Point(4, 22);
-            this.pageSwitchLog.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.pageSwitchLog.Margin = new System.Windows.Forms.Padding(2);
             this.pageSwitchLog.Name = "pageSwitchLog";
-            this.pageSwitchLog.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.pageSwitchLog.Padding = new System.Windows.Forms.Padding(2);
             this.pageSwitchLog.Size = new System.Drawing.Size(830, 383);
             this.pageSwitchLog.TabIndex = 1;
             this.pageSwitchLog.Text = "Switch Log";
@@ -139,7 +139,7 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.switchLog.Location = new System.Drawing.Point(4, 5);
-            this.switchLog.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.switchLog.Margin = new System.Windows.Forms.Padding(2);
             this.switchLog.Multiline = true;
             this.switchLog.Name = "switchLog";
             this.switchLog.ReadOnly = true;
@@ -157,7 +157,7 @@
             // 
             this.cbProject.FormattingEnabled = true;
             this.cbProject.Location = new System.Drawing.Point(45, 40);
-            this.cbProject.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.cbProject.Margin = new System.Windows.Forms.Padding(2);
             this.cbProject.Name = "cbProject";
             this.cbProject.Size = new System.Drawing.Size(233, 21);
             this.cbProject.TabIndex = 9;
@@ -166,7 +166,7 @@
             // 
             this.buttonSwitch.BackColor = System.Drawing.SystemColors.ButtonFace;
             this.buttonSwitch.Location = new System.Drawing.Point(288, 40);
-            this.buttonSwitch.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.buttonSwitch.Margin = new System.Windows.Forms.Padding(2);
             this.buttonSwitch.Name = "buttonSwitch";
             this.buttonSwitch.Size = new System.Drawing.Size(56, 21);
             this.buttonSwitch.TabIndex = 8;
@@ -224,30 +224,30 @@
             this.javaHomeToolStripMenuItem.Text = "Java Home";
             this.javaHomeToolStripMenuItem.Click += new System.EventHandler(this.javaHomeToolStripMenuItem_Click);
             // 
-            // button1
+            // btnConfigureProject
             // 
-            this.button1.BackColor = System.Drawing.SystemColors.ButtonFace;
-            this.button1.Location = new System.Drawing.Point(359, 40);
-            this.button1.Margin = new System.Windows.Forms.Padding(2);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(67, 21);
-            this.button1.TabIndex = 11;
-            this.button1.Text = "Configure";
-            this.button1.UseVisualStyleBackColor = false;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.btnConfigureProject.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.btnConfigureProject.Location = new System.Drawing.Point(359, 40);
+            this.btnConfigureProject.Margin = new System.Windows.Forms.Padding(2);
+            this.btnConfigureProject.Name = "btnConfigureProject";
+            this.btnConfigureProject.Size = new System.Drawing.Size(67, 21);
+            this.btnConfigureProject.TabIndex = 11;
+            this.btnConfigureProject.Text = "Configure";
+            this.btnConfigureProject.UseVisualStyleBackColor = false;
+            this.btnConfigureProject.Click += new System.EventHandler(this.btnConfigureProject_Click);
             // 
             // SwitcherMainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(856, 496);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.btnConfigureProject);
             this.Controls.Add(this.menuStrip1);
             this.Controls.Add(this.cbProject);
             this.Controls.Add(this.buttonSwitch);
             this.Controls.Add(this.tabControlLogs);
             this.MainMenuStrip = this.menuStrip1;
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "SwitcherMainForm";
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.Form1_Load);
@@ -283,7 +283,7 @@
         private System.Windows.Forms.ToolStripMenuItem avoidProcessesToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem substDriveToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem javaHomeToolStripMenuItem;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btnConfigureProject;
     }
 }
 

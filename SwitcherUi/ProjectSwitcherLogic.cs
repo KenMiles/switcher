@@ -19,6 +19,7 @@ namespace SwitcherUi
         void DisplayCurrentProject(string project);
         void ListProjects(Project[] projects, Project select);
         void ShowCanSwitchStatus(EnumCanSwitch status, string[] messages);
+        bool ConfigureProject(Project project);
     }
 
 
@@ -101,6 +102,7 @@ namespace SwitcherUi
 
         private bool DoSwitch(Project project)
         {
+            _projectManager.RefreshProject(project);
             var result = _switcher.SwitchTo(project);
             if (result.Switched != Switched.Yes)
             {
@@ -130,7 +132,7 @@ namespace SwitcherUi
 
         private Project Selected(Project[] projects, string projectName) {
             if (projects == null || projects.Length == 0 || string.IsNullOrWhiteSpace(projectName)) return null;
-            return projects.Where(p => projectName == p.Name).First();
+            return projects.First(p => projectName == p.Name);
         }
 
         public void ReadCurrentProject() {
@@ -141,14 +143,33 @@ namespace SwitcherUi
             _userFeedback.ListProjects(projects, selected);
         }
 
-        public void DoConfig(CreateConfigForm CreateConfigForm) {
+        public void DoConfig(CreateConfigForm createConfigForm) {
             if (!CheckCanSwitch(PerformingAction.Config, "Config"))
             {
                 return;
             }
             var result = _switcher.MakeReadyForConfig();
-            var frm = CreateConfigForm();
+            var frm = createConfigForm();
             frm.ShowDialog();
+            DoSwitch(_projectManager.Project(_config.CurrentProject));
+        }
+
+        public void ConfigureProject(Project project)
+        {
+            if (project == null)
+            {
+                _userFeedback.ErrorMessage("Configure Project", "No Project Selelected");
+                return;
+            }
+            if (!CheckCanSwitch(PerformingAction.Config, "Config"))
+            {
+                return;
+            }
+            _projectManager.RefreshProject(project);
+            if (!_userFeedback.ConfigureProject(project)
+                || project.Name != _config.CurrentProject
+                || !_userFeedback.WarningAsk("Update Enviroment", "Current Project configuration has been changed, update enviroment?")
+                || !CheckCanSwitch(PerformingAction.Switch, project.Name)) return;
             DoSwitch(_projectManager.Project(_config.CurrentProject));
         }
 

@@ -51,21 +51,23 @@ namespace SwitcherUi.switching
         public override SwitchResult SwitchTo(Project project)
         {
             if (!Enabled) return new SwitchResult { SourceName = Name, Success = true, Message = "Disabled" };
-            if (RemoveDrive()) {
+            if (!RemoveDrive()) {
                return Result(false, "Unable to remove drive " + Drive);
             }
             var path = Path.Combine(RootPath, project.Settings.Value("folder", project.Name));
             var exists = Directory.Exists(path);
-            var created = false;
             try
             {
-                created = !exists && (Directory.CreateDirectory(path) != null);
+                if (!exists && !Directory.CreateDirectory(path).Exists)
+                {
+                    return Result(false, $"Unable to creating missing path '{path}'");
+                }
             }
             catch (Exception e) {
                 return Result(false, "Creating path '" + path + "' threw excetion " + e.ToString());
             }
             var defined = DefineDosDevice(0, Drive, path) ;
-            return Result(defined, "{0} Drive '{1}' to Path '{2}' ", defined ? "Set" : "Unable to set", Drive, path);
+            return Result(defined, "{0} Drive '{1}' to Path '{2}' {3}", defined ? "Set" : "Unable to set", Drive, path, exists ? "" : "(created as path didn't exist)");
         }
 
         override public SwitchResult MakeReadyForConfig()

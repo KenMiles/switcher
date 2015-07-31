@@ -16,15 +16,15 @@ namespace SwitcherUi.config
     {
         private readonly FileIniDataParser _parser = new FileIniDataParser();
         private readonly string _iniFileName;
-        private IniData ini;
+        private IniData _ini;
         private const string BlockingProcessSection = "blocking-processes";
         private const string WarningProcessSection = "warning-processes";
 
         private void DoUpdate(Update updates) {
             RefreshConfig();
-            updates(ini);
-            _parser.WriteFile(_iniFileName, ini);
-            //RefreshConfig();
+            updates(_ini);
+            _parser.WriteFile(_iniFileName, _ini);
+            RefreshConfig();
         }
 
         private string CfgFile(DirectoryInfo dir) {
@@ -48,7 +48,7 @@ namespace SwitcherUi.config
         }
 
         private void RefreshConfig() {
-          ini = File.Exists(_iniFileName) ? _parser.ReadFile(_iniFileName) : new IniData();
+          _ini = File.Exists(_iniFileName) ? _parser.ReadFile(_iniFileName) : new IniData();
         }
 
         public ConfigurationImpl(CommandArguments args)
@@ -66,8 +66,8 @@ namespace SwitcherUi.config
             return new Dictionary<string, string>(source , StringComparer.OrdinalIgnoreCase);
         }
         private Settings GetSection(string sectionName, DefaultDictionay defaultDictionary = null) {
-            if (!ini.Sections.ContainsSection(sectionName)) return new Settings(defaultDictionary == null ? null : defaultDictionary());
-            return new Settings(ini.Sections[sectionName].ToDictionary(k => k.KeyName, v => v.Value));
+            if (!_ini.Sections.ContainsSection(sectionName)) return new Settings(defaultDictionary?.Invoke());
+            return new Settings(_ini.Sections[sectionName].ToDictionary(k => k.KeyName, v => v.Value));
         }
 
         private void SetSection(string sectionName, Settings settings)
@@ -112,7 +112,7 @@ namespace SwitcherUi.config
         {
             get
             {
-                return ini.Sections.Select(s => s.SectionName)
+                return _ini.Sections.Select(s => s.SectionName)
                      .Where(s => s.StartsWith(ProjectPrefix, StringComparison.InvariantCultureIgnoreCase))
                      .Select(s => s.Substring(ProjectPrefix.Length))
                      .ToArray();

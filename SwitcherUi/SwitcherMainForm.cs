@@ -78,6 +78,7 @@ namespace SwitcherUi
             }
         }
 
+ 
         private readonly IConfiguration _config; 
         private readonly ProjectSwitcherLogic _logic;
         public SwitcherMainForm()
@@ -190,21 +191,17 @@ namespace SwitcherUi
             _logic.DoConfig(() => new FrmJavaHomeCfg(_config));
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        public bool ConfigureProject(Project project)
         {
-            var project = (Project) cbProject.SelectedItem;
-            if (project == null)
-            {
-                MessageBox.Show("No Project Selelected");
-                return;
-            }
             var frm = new ProjectConfigForm(_config, project);
-            if (frm.ShowDialog() == DialogResult.OK && project.Name == _config.CurrentProject &&
-                MessageBox.Show("Current Project configuration has been changed, update enviroment?",
-                    "Update Enviroment", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
-            {
-                _logic.SwitchTo(project);
-            }
+            return frm.ShowDialog() == DialogResult.OK;
+        }
+
+
+        private void btnConfigureProject_Click(object sender, EventArgs e)
+        {
+            _logic.ConfigureProject((Project)cbProject.SelectedItem);
+
         }
     }
 

@@ -99,13 +99,13 @@ namespace SwitcherUi.switching
             }
         }
 
-        private readonly Regex IsJavaVersion = new Regex(@"^JAVA_[0-9]+");
+        private readonly Regex _isJavaVersion = new Regex(@"^JAVA_[0-9]+");
         private void CleanUpJavaVersionEnvironmentVariables(EnvironmentVariableTarget target, bool forceClear) {
             var lines = new List<string>();
             foreach (System.Collections.DictionaryEntry envVar in Environment.GetEnvironmentVariables(target))
             {
                 var varName = envVar.Key.ToString();
-                if (IsJavaVersion.IsMatch(varName) && (forceClear || JavaJdk(envVar.Value.ToString(), "") == null)) {
+                if (_isJavaVersion.IsMatch(varName) && (forceClear || JavaJdk(envVar.Value.ToString(), "") == null)) {
                     Environment.SetEnvironmentVariable(varName, null, target);
                 }
             }
@@ -121,7 +121,7 @@ namespace SwitcherUi.switching
         {
             public string JavaVersion { get; set; }
             public List<string> TriedVersions = new List<string>();
-            public bool Found => string.IsNullOrWhiteSpace((JavaVersion));
+            public bool Found => !string.IsNullOrWhiteSpace((JavaVersion));
             public string Message() {
                 var notFound = TriedVersions.Count == 0 ? "" : "Unable to find JDKS for " + string.Join(", ", TriedVersions);
                 if (Found) return $"Switched JAVA_HOME to '{JavaVersion}' {notFound}".Trim();
@@ -158,7 +158,7 @@ namespace SwitcherUi.switching
                 };
             }
             var desiredFound = FindBestMatch(javaVersions);
-            if (!desiredFound.Found)
+            if (desiredFound.Found)
             {
                 EnvironmentVariables.SetEnvironmentVariable(JAVA_HOME, LatestJdk[desiredFound.JavaVersion].Path, EnvironmentVariableTarget.Machine);
             }
