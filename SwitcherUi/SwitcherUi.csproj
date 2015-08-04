@@ -44,6 +44,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.DirectoryServices" />
     <Reference Include="System.ServiceProcess" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -102,11 +103,23 @@
       <DependentUpon>FrmSubstDriveCfg.cs</DependentUpon>
     </Compile>
     <Compile Include="switching\cfg\IProjectItem.cs" />
+    <Compile Include="switching\cfg\ProjectEnvVariablesSettings.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="switching\cfg\ProjectEnvVariablesSettings.Designer.cs">
+      <DependentUpon>ProjectEnvVariablesSettings.cs</DependentUpon>
+    </Compile>
     <Compile Include="switching\cfg\ProjectJavaSettings.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="switching\cfg\ProjectJavaSettings.Designer.cs">
       <DependentUpon>ProjectJavaSettings.cs</DependentUpon>
+    </Compile>
+    <Compile Include="switching\cfg\ProjectSubsDriveSettings.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="switching\cfg\ProjectSubsDriveSettings.Designer.cs">
+      <DependentUpon>ProjectSubsDriveSettings.cs</DependentUpon>
     </Compile>
     <Compile Include="switching\EnvironmentVariables.cs" />
     <Compile Include="switching\ISwitch.cs" />
@@ -137,8 +150,14 @@
     <EmbeddedResource Include="switching\cfg\FrmSubstDriveCfg.resx">
       <DependentUpon>FrmSubstDriveCfg.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="switching\cfg\ProjectEnvVariablesSettings.resx">
+      <DependentUpon>ProjectEnvVariablesSettings.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="switching\cfg\ProjectJavaSettings.resx">
       <DependentUpon>ProjectJavaSettings.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="switching\cfg\ProjectSubsDriveSettings.resx">
+      <DependentUpon>ProjectSubsDriveSettings.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="LICENSE" />
     <None Include="packages.config" />

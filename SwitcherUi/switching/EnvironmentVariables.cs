@@ -20,9 +20,10 @@ namespace SwitcherUi.switching
 
         private const string NoEnvironmentVariables = "No Environment Variables defined for project";
         private const string SetEnvironmentVariables = "Set Environment Variables: ";
+        public const string ProjectConfigSectionName = "Environment Variables";
         public override SwitchResult SwitchTo(Project project)
         {
-            var settings = config[project, "Environment Variables"];
+            var settings = Config[project, ProjectConfigSectionName];
             foreach (var value in settings.Values) {
                 SetEnvironmentVariable(value.Key, value.Value, EnvironmentVariableTarget.Machine);
             }

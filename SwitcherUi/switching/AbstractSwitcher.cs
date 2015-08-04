@@ -9,11 +9,10 @@ namespace SwitcherUi.switching
 {
     abstract class AbstractSwitcher : ISwitch
     {
-        protected readonly IConfiguration config;
-        protected readonly Settings settings;
-        private readonly string _name;
+        protected readonly IConfiguration Config;
+        protected readonly Settings Settings;
 
-        public string Name { get { return _name; } }
+        public string Name { get; }
 
         protected SwitchResult Result(bool success, string message) {
             return new SwitchResult {
@@ -28,9 +27,9 @@ namespace SwitcherUi.switching
         }
 
         protected AbstractSwitcher(IConfiguration config, string name) {
-            _name = name;
-            this.config = config;
-            settings = config[this];
+            Name = name;
+            this.Config = config;
+            Settings = config[this];
         }
 
         abstract public SwitchResult SwitchTo(Project project);
