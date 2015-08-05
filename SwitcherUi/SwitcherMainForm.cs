@@ -63,7 +63,7 @@ namespace SwitcherUi
                 case EnumCanSwitch.csNo: return Color.Red;
                 case EnumCanSwitch.csAfterWarning: return Color.Orange;
             }
-            return DefaultBackColor;
+            return _switchAndShut > 0 ? Color.Green : DefaultBackColor;
         }
 
         private int _showedShowSwitchedLogCount = 0;
@@ -84,8 +84,9 @@ namespace SwitcherUi
         public SwitcherMainForm()
         {
             InitializeComponent();
-            _config = new ConfigurationImpl(new CommandArguments(Environment.GetCommandLineArgs()));
-            _logic = new ProjectSwitcherLogic(_config, this);
+            var args = new CommandArguments(Environment.GetCommandLineArgs());
+            _config = new ConfigurationImpl(args);
+            _logic = new ProjectSwitcherLogic(_config, this, args);
         }
 
 
@@ -109,7 +110,7 @@ namespace SwitcherUi
 
         private void Form1_Resize(object sender, EventArgs e)
         {
-            switch (this.WindowState) {
+            /*switch (this.WindowState) {
                 case FormWindowState.Minimized:
                     trayIcon.BalloonTipTitle = "Switcher";
                     trayIcon.BalloonTipIcon = ToolTipIcon.Info;
@@ -120,7 +121,7 @@ namespace SwitcherUi
                 default:
                     trayIcon.Visible = false;
                     break;
-            }
+            }*/
         }
 
         private void restoreToolStripMenuItem_Click(object sender, EventArgs e)
@@ -197,11 +198,25 @@ namespace SwitcherUi
             return frm.ShowDialog() == DialogResult.OK;
         }
 
+        public void StartAutoSwitchAndClose()
+        {
+            _switchAndShut = 1;
+            timerSwitch.Enabled = true;
+        }
+
 
         private void btnConfigureProject_Click(object sender, EventArgs e)
         {
             _logic.ConfigureProject((Project)cbProject.SelectedItem);
 
+        }
+
+        private int _switchAndShut = 0;
+        private void timerSwitch_Tick(object sender, EventArgs e)
+        {
+            if (_switchAndShut++ < 6 ) return;
+            timerSwitch.Enabled = false;
+            if (_logic.SwitchToCurrent()) Close();
         }
     }
 

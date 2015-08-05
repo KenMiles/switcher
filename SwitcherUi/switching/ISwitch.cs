@@ -19,4 +19,5 @@ namespace SwitcherUi.switching
         SwitchResult SwitchTo(Project project);
         SwitchResult MakeReadyForConfig();
     }
+
 }

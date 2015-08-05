@@ -20,6 +20,7 @@ namespace SwitcherUi
         void ListProjects(Project[] projects, Project select);
         void ShowCanSwitchStatus(EnumCanSwitch status, string[] messages);
         bool ConfigureProject(Project project);
+        void StartAutoSwitchAndClose();
     }
 
 
@@ -30,17 +31,19 @@ namespace SwitcherUi
         private readonly CanSwitch _canSwitch;
         private readonly Switcher _switcher;
         private readonly IUserFeedback _userFeedback;
+        private readonly CommandArguments _args;
 
-        internal ProjectSwitcherLogic(IConfiguration config, ProjectManager projectManager, Switcher switcher, CanSwitch canSwitch, IUserFeedback userFeedback)
+        internal ProjectSwitcherLogic(IConfiguration config, ProjectManager projectManager, Switcher switcher, CanSwitch canSwitch, IUserFeedback userFeedback, CommandArguments args)
         {
             _config = config;
             _projectManager = projectManager;
             _canSwitch = canSwitch;
             _switcher = switcher;
             _userFeedback = userFeedback;
+            _args = args;
         }
-        public ProjectSwitcherLogic(IConfiguration config, IUserFeedback userFeedback) : 
-            this(config, new ProjectManager(config), new Switcher(config), new CanSwitch(config), userFeedback)
+        public ProjectSwitcherLogic(IConfiguration config, IUserFeedback userFeedback, CommandArguments args) : 
+            this(config, new ProjectManager(config), new Switcher(config), new CanSwitch(config), userFeedback, args)
         {
         }
 
@@ -135,12 +138,20 @@ namespace SwitcherUi
             return projects.First(p => projectName == p.Name);
         }
 
+        private Project _current;
+
         public void ReadCurrentProject() {
             var current = _config.CurrentProject;
             _userFeedback.DisplayCurrentProject(current);
             var projects = AllProjects();
-            var selected = Selected(projects, current);
-            _userFeedback.ListProjects(projects, selected);
+            _current = Selected(projects, current);
+            _userFeedback.ListProjects(projects, _current);
+            if (_current != null && _args.ArgumentExists("switch")) _userFeedback.StartAutoSwitchAndClose();
+        }
+
+        public bool SwitchToCurrent()
+        {
+            return SwitchTo(_current);
         }
 
         public void DoConfig(CreateConfigForm createConfigForm) {

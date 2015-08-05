@@ -48,6 +48,7 @@
             this.substDriveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.javaHomeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.btnConfigureProject = new System.Windows.Forms.Button();
+            this.timerSwitch = new System.Windows.Forms.Timer(this.components);
             this.contextMenuStrip1.SuspendLayout();
             this.tabControlLogs.SuspendLayout();
             this.pageIssues.SuspendLayout();
@@ -60,7 +61,6 @@
             this.trayIcon.ContextMenuStrip = this.contextMenuStrip1;
             this.trayIcon.Icon = ((System.Drawing.Icon)(resources.GetObject("trayIcon.Icon")));
             this.trayIcon.Text = "notifyIcon1";
-            this.trayIcon.Visible = true;
             this.trayIcon.DoubleClick += new System.EventHandler(this.trayIcon_DoubleClick);
             // 
             // contextMenuStrip1
@@ -236,6 +236,11 @@
             this.btnConfigureProject.UseVisualStyleBackColor = false;
             this.btnConfigureProject.Click += new System.EventHandler(this.btnConfigureProject_Click);
             // 
+            // timerSwitch
+            // 
+            this.timerSwitch.Interval = 1000;
+            this.timerSwitch.Tick += new System.EventHandler(this.timerSwitch_Tick);
+            // 
             // SwitcherMainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -284,6 +289,7 @@
         private System.Windows.Forms.ToolStripMenuItem substDriveToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem javaHomeToolStripMenuItem;
         private System.Windows.Forms.Button btnConfigureProject;
+        private System.Windows.Forms.Timer timerSwitch;
     }
 }
 
