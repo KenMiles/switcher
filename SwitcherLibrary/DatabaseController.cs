@@ -10,43 +10,22 @@ namespace SwitcherLibrary
     class DatabaseController
     {
         private static readonly ILog Log = LogManager.GetLogger(typeof(DatabaseController));
-        private readonly Dictionary<string, string[]> _databases;
-        private readonly int _timeout;
+        private readonly DatabaseControllerConfig _config;
 
-        private static int IntToStr(string intStr, int defaultValue)
+        private DatabaseController(DatabaseControllerConfig config)
         {
-            if (string.IsNullOrWhiteSpace(intStr)) return defaultValue;
-            try
-            {
-                return int.Parse(intStr.Trim());
-            }
-            catch (Exception e)
-            {
-                Log.Error($"Converting '{intStr}' to int", e);
-                return defaultValue;
-            }
+            _config = config;
         }
-        private const string TimeoutValueName = "Timeout";
-        private const string SectionName = "Databases";
 
-        public DatabaseController(IConfiguration config)
+        public DatabaseController(IConfiguration config): this(new DatabaseControllerConfig(config))
         {
-            var cfg = config.GetSwitcherCfg(SectionName).Values;
-            Log.Debug("CFG: " + string.Join(", ", cfg.Keys));
-            _databases =
-                cfg.Where(
-                    c =>
-                        !string.IsNullOrWhiteSpace(c.Value) &&
-                        !string.Equals(c.Key, TimeoutValueName, StringComparison.InvariantCultureIgnoreCase)
-                    )
-                    .ToDictionary(k => k.Key, v => v.Value.Split(';').Where(w => !string.IsNullOrWhiteSpace(w)).ToArray(), StringComparer.InvariantCultureIgnoreCase);
-            _timeout = IntToStr(cfg.ContainsKey(TimeoutValueName) ? cfg[TimeoutValueName] : "", 30);
         }
 
         private string[] ControlDb(string database, ControlDbServices controlDbServices)
         {
-            if (!_databases.ContainsKey(database)) return new[] { $"ERROR: Unknown datatbase '{database}'" };
-            var serviceControl = new ServiceControl(_databases[database], _timeout);
+            var services = _config.DatabaseServices(database);
+            if (services.Length == 0) return new[] { $"ERROR: Unknown datatbase '{database}'" };
+            var serviceControl = new ServiceControl(services, _config.Timeout);
             return controlDbServices(serviceControl);
         }
 

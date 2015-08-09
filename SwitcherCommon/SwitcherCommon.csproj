@@ -50,6 +50,7 @@
   <ItemGroup>
     <Compile Include="CommandArguments.cs" />
     <Compile Include="ConfigurationImpl.cs" />
+    <Compile Include="DatabaseControllerConfig.cs" />
     <Compile Include="IConfiguration.cs" />
     <Compile Include="JavaJdk.cs" />
     <Compile Include="JdkFinder.cs" />

@@ -108,6 +108,12 @@
       <DependentUpon>FrmSubstDriveCfg.cs</DependentUpon>
     </Compile>
     <Compile Include="switching\cfg\IProjectItem.cs" />
+    <Compile Include="switching\cfg\ProjectDatabaseStarter.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="switching\cfg\ProjectDatabaseStarter.Designer.cs">
+      <DependentUpon>ProjectDatabaseStarter.cs</DependentUpon>
+    </Compile>
     <Compile Include="switching\cfg\ProjectEnvVariablesSettings.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -126,6 +132,7 @@
     <Compile Include="switching\cfg\ProjectSubsDriveSettings.Designer.cs">
       <DependentUpon>ProjectSubsDriveSettings.cs</DependentUpon>
     </Compile>
+    <Compile Include="switching\DatabaseStarter.cs" />
     <Compile Include="switching\EnvironmentVariables.cs" />
     <Compile Include="switching\ISwitch.cs" />
     <Compile Include="switching\JavaHome.cs" />
@@ -154,6 +161,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="switching\cfg\FrmSubstDriveCfg.resx">
       <DependentUpon>FrmSubstDriveCfg.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="switching\cfg\ProjectDatabaseStarter.resx">
+      <DependentUpon>ProjectDatabaseStarter.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="switching\cfg\ProjectEnvVariablesSettings.resx">
       <DependentUpon>ProjectEnvVariablesSettings.cs</DependentUpon>

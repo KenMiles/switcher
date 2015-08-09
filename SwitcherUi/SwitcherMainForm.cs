@@ -1,23 +1,14 @@
 ﻿using System;
-using System.ComponentModel;
-using System.Data;
-using System.Diagnostics;
 using System.Drawing;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using IniParser;
 using SwitcherUi.config;
 using SwitcherUi.allowSwitching;
-using SwitcherUi.switching;
 using System.Linq;
 using System.Collections.Generic;
-using System.Text.RegularExpressions;
-using System.ServiceProcess;
-using System.IO;
 using SwitcherCommon;
 using SwitcherUi.switching.cfg;
-using SwitcherUi.ServiceReference1;
 using ConfigurationImpl = SwitcherUi.config.ConfigurationImpl;
 using IConfiguration = SwitcherUi.config.IConfiguration;
 
@@ -205,10 +196,10 @@ namespace SwitcherUi
             if (_logic.SwitchToCurrent()) Close();
         }
 
-        private void button1_Click(object sender, EventArgs e)
+
+        private void shutLocalDatabasesToolStripMenuItem_Click(object sender, EventArgs e)
         {
-           var temp = new SwitchingServiceClient();
-            MessageBox.Show(string.Join("\r\n", temp.StartDatabase("Oracle")));
+            _logic.ShutLocalDatabases();
         }
     }
 

@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using SwitcherCommon;
 using IConfiguration = SwitcherUi.config.IConfiguration;
+using SwitcherUi.ServiceReference1;
 
 namespace SwitcherUi
 {
@@ -184,6 +185,21 @@ namespace SwitcherUi
                 || !_userFeedback.WarningAsk("Update Enviroment", "Current Project configuration has been changed, update enviroment?")
                 || !CheckCanSwitch(PerformingAction.Switch, project.Name)) return;
             DoSwitch(_projectManager.Project(_config.CurrentProject));
+        }
+
+        public void ShutLocalDatabases()
+        {
+            var cfg = new DatabaseControllerConfig(_config);
+            var databases = cfg.Databases;
+            if (databases.Length == 0)
+            {
+                _userFeedback.ErrorMessage("Closing Databases", "No Databases' configured");
+                return;
+            }
+            var svc = new SwitchingServiceClient();
+            var closed = databases.Select(s => svc.StopDatabase(s)).SelectMany(s => s).ToArray();
+            _userFeedback.DisplaySwitchLog(closed);
+
         }
 
     }
