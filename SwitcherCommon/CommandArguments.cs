@@ -1,23 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace SwitcherUi.config
+namespace SwitcherCommon
 {
-    class CommandArguments
+    public class CommandArguments
     {
-        private readonly Dictionary<String, String> _arguments;
+        private readonly Dictionary<string, string> _arguments;
 
         private static string ArgName(string name)
         {
-            return name == null ? "" : name.ToUpper().Trim();
+            return name?.ToUpper().Trim() ?? "";
         }
 
         private static string ArgumentName(string fromValue)
         {
-            var pos = fromValue.IndexOf(":");
+            var pos = fromValue.IndexOf(":", StringComparison.Ordinal);
             var argumentName = ArgName(pos > 0 ? fromValue.Substring(0, pos) : fromValue);
             if (argumentName.StartsWith("/") || argumentName.StartsWith("-")) return argumentName.Substring(1).Trim();
             return argumentName;
@@ -25,11 +23,11 @@ namespace SwitcherUi.config
 
         private static string ArgumentValue(string fromValue)
         {
-            var pos = fromValue.IndexOf(":");
+            var pos = fromValue.IndexOf(":", StringComparison.Ordinal);
             return pos < 0 ? "" : fromValue.Substring(pos + 1);
         }
 
-        public CommandArguments(String[] args)
+        public CommandArguments(string[] args)
         {
             _arguments = args.Where(s => !string.IsNullOrEmpty(s)).ToDictionary(ArgumentName, ArgumentValue);
         }
@@ -52,7 +50,7 @@ namespace SwitcherUi.config
         private static int ToInt(string intStr, int defaultValue)
         {
             int result;
-            return Int32.TryParse(intStr.Trim(), out result) ? result : defaultValue;
+            return int.TryParse(intStr.Trim(), out result) ? result : defaultValue;
         }
 
         public int AsInt(string argumentName, int defaultValue)
@@ -65,7 +63,7 @@ namespace SwitcherUi.config
             return AsInt(argumentName, 0);
         }
 
-        public Boolean HelpRequested()
+        public bool HelpRequested()
         {
             return ArgumentExists("?") || ArgumentExists("help");
         }

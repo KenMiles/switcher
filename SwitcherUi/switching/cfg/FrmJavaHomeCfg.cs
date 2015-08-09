@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using SwitcherCommon;
 
 namespace SwitcherUi.switching.cfg
 {
@@ -19,13 +20,13 @@ namespace SwitcherUi.switching.cfg
         private string _lastValue;
         private string _lastRoot;
         private ListViewItem _changing;
-        private readonly IConfiguration _config;
-        internal FrmJavaHomeCfg(IConfiguration config)
+        private readonly config.IConfiguration _config;
+        internal FrmJavaHomeCfg(config.IConfiguration config)
         {
             InitializeComponent();
             SetButtonStates();
             _config = config;
-            var paths = _config.GetSwitcherCfg(JavaHome.JAVA_HOME, JavaHome.JAVA_PATHS).Values.ToList();
+            var paths = _config.GetSwitcherCfg(JdkFinder.JAVA_HOME, JavaHome.JAVA_PATHS).Values.ToList();
             paths.ForEach(v => setValues(NewListItem, v.Key, v.Value));
         }
 
@@ -54,7 +55,7 @@ namespace SwitcherUi.switching.cfg
         private bool Check(bool isError, string message, Control selectControl) {
             if (!isError) return true;
             MessageBox.Show(message, "Issue", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            if (selectControl != null) selectControl.Select();
+            selectControl?.Select();
             return false;
         }
 
@@ -117,7 +118,7 @@ namespace SwitcherUi.switching.cfg
 
         private ListViewItem Selected() {
             var selected = lvJavaSearchLocations.SelectedItems;
-            return selected != null && selected.Count == 1 ? selected[0] : null;
+            return selected.Count == 1 ? selected[0] : null;
         }
 
         private void lvJavaSearchLocations_SelectedIndexChanged(object sender, EventArgs e)
@@ -185,7 +186,7 @@ namespace SwitcherUi.switching.cfg
         {
             try
             {
-                _config.SetSwitcherCfg(JavaHome.JAVA_HOME, JavaHome.JAVA_PATHS, GetValues());
+                _config.SetSwitcherCfg(JdkFinder.JAVA_HOME, JavaHome.JAVA_PATHS, GetValues());
                 DialogResult = DialogResult.OK;
             }
             catch (Exception ex) {

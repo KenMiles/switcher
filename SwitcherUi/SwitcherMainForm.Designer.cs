@@ -49,6 +49,7 @@
             this.javaHomeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.btnConfigureProject = new System.Windows.Forms.Button();
             this.timerSwitch = new System.Windows.Forms.Timer(this.components);
+            this.button1 = new System.Windows.Forms.Button();
             this.contextMenuStrip1.SuspendLayout();
             this.tabControlLogs.SuspendLayout();
             this.pageIssues.SuspendLayout();
@@ -241,11 +242,24 @@
             this.timerSwitch.Interval = 1000;
             this.timerSwitch.Tick += new System.EventHandler(this.timerSwitch_Tick);
             // 
+            // button1
+            // 
+            this.button1.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.button1.Location = new System.Drawing.Point(505, 40);
+            this.button1.Margin = new System.Windows.Forms.Padding(2);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(67, 21);
+            this.button1.TabIndex = 12;
+            this.button1.Text = "Test";
+            this.button1.UseVisualStyleBackColor = false;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
             // SwitcherMainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(856, 496);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.btnConfigureProject);
             this.Controls.Add(this.menuStrip1);
             this.Controls.Add(this.cbProject);
@@ -290,6 +304,7 @@
         private System.Windows.Forms.ToolStripMenuItem javaHomeToolStripMenuItem;
         private System.Windows.Forms.Button btnConfigureProject;
         private System.Windows.Forms.Timer timerSwitch;
+        private System.Windows.Forms.Button button1;
     }
 }
 

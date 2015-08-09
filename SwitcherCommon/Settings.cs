@@ -1,37 +1,34 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace SwitcherUi.config
+namespace SwitcherCommon
 {
     public class Settings
     {
         public static Dictionary<string, string> SettingsDictionary() {
             return new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
         }
-        private Dictionary<string, string> _settings;
+
         public Settings(Dictionary<string, string> settings)
         {
-            _settings = settings == null 
+            Values = settings == null 
                  ?  SettingsDictionary()
                  :  new Dictionary<string, string>(settings, StringComparer.OrdinalIgnoreCase);
         }
 
         public bool ContainsKey(string key) {
-            return _settings.ContainsKey(key);
+            return Values.ContainsKey(key);
         }
 
         public string Value(string key, string defaultValue = "")
         {
-            if (_settings.ContainsKey(key)) return _settings[key];
+            if (Values.ContainsKey(key)) return Values[key];
             return defaultValue;
         }
 
         public string[] ArrayValue(string key, string defaultValues = "")
         {
-            if (_settings.ContainsKey(key)) return (_settings[key]??"").Split(';');
+            if (Values.ContainsKey(key)) return (Values[key]??"").Split(';');
             return (defaultValues??"").Split(';');
         }
 
@@ -43,9 +40,9 @@ namespace SwitcherUi.config
         public string this[string key]
         {
             get { return Value(key); }
-            set { _settings[key] = value; }
+            set { Values[key] = value; }
         }
 
-        public Dictionary<string, string> Values => _settings;
+        public Dictionary<string, string> Values { get; }
     }
 }

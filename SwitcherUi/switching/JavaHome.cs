@@ -6,82 +6,25 @@ using System.Text;
 using System.Threading.Tasks;
 using SwitcherUi.config;
 using System.Text.RegularExpressions;
+using SwitcherCommon;
+using SwitcherUi.ServiceReference1;
 
 namespace SwitcherUi.switching
 {
-    class JavaJdk
-    {
-        public string Path { get; set; }
-        public int MajorVersionPt1 { get; set; }
-        public int MajorVersionPt2 { get; set; }
-        public int MinorVersion { get; set; }
-        public int ReleaseVersion { get; set; }
-        public string Suffix { get; set; }
-
-        public string MajorVersion {
-            get
-            {
-                string fmt = MajorVersionPt2 <= 4 ? "{0}.{1}" : "{1}";
-                return string.Format(fmt, MajorVersionPt1, MajorVersionPt2);
-            }
-            }
-
-        public string EnvironmentVariable
-        {
-            get
-            {
-                string suffix = string.IsNullOrWhiteSpace(Suffix) ? "" : "_" + Suffix.Trim();
-                return $"JAVA_{MajorVersion}{suffix}";
-            }
-        }
-    }
 
     class JavaHome : AbstractSwitcher
     {
-        private readonly Settings _javaPaths;
-        internal const string JAVA_HOME = "JAVA_HOME";
         internal const string JAVA_PATHS = "paths";
-        public JavaHome(IConfiguration config) : base(config, JAVA_HOME)
+        private readonly JdkFinder _jdkFinder;
+        public JavaHome(config.IConfiguration config) : base(config, JdkFinder.JAVA_HOME)
         {
-            _javaPaths = config[this, JAVA_PATHS];
+            _jdkFinder = new JdkFinder(config[this, JAVA_PATHS].Values);
         }
 
-        private int Version(string[] versionParts, int index) {
-            if (versionParts.Length > index) return int.Parse(versionParts[index]);
-            return 0;
-        }
 
-        private JavaJdk JavaJdk(string path, string suffix) {
-            if (!File.Exists(Path.Combine(path, @"bin\javac.exe"))) return null;
-            var version = Path.GetFileName(path).Replace("jdk", "").Split('.', '_');
-            return new JavaJdk {
-                Path = path,
-                MajorVersionPt1 = Version(version, 0),
-                MajorVersionPt2 = Version(version, 1),
-                MinorVersion = Version(version, 2),
-                ReleaseVersion = Version(version, 3),
-                Suffix = suffix
-            };
-        }
-
-        private IEnumerable<JavaJdk> FindJdks(string path, string suffix) {
-            if (string.IsNullOrWhiteSpace(path) || !Directory.Exists(path)) return new JavaJdk[0];
-            var jdkDirs = Directory.GetDirectories(path, "jdk*");
-            return jdkDirs.Select(f => JavaJdk(f, suffix)).Where(j => j != null);
-        }
-
-        private string ProgramFilesPath(bool bit32) {
-            var environmentVariable = bit32 ? "ProgramFiles(x86)" : "ProgramFiles";
-            return Path.Combine(Environment.GetEnvironmentVariable(environmentVariable), "java");
-        }
-
-        private JavaJdk[] FindJdks() {
-            var other = _javaPaths.Values.Select(s => FindJdks(s.Key, s.Value)).SelectMany(j => j);
-            return FindJdks(ProgramFilesPath(false), "").Concat(FindJdks(ProgramFilesPath(true), "32BIT")).Concat(other).ToArray();
-        }
 
         private JavaJdk[] _jdks;
-        public JavaJdk[] Jdks { get { return _jdks = _jdks ?? FindJdks(); } }
+        public JavaJdk[] Jdks { get { return _jdks = _jdks ?? _jdkFinder.FindJdks(); } }
 
         private Dictionary<string, JavaJdk> BuildLatestJdkList() {
             var jdks = Jdks.GroupBy(j => j.EnvironmentVariable).Select(g => g.OrderByDescending(j => j.MinorVersion).ThenBy(j => j.ReleaseVersion).Take(1));
@@ -92,29 +35,11 @@ namespace SwitcherUi.switching
         public Dictionary<string, JavaJdk> LatestJdk { get { return _latestJdk = _latestJdk ?? BuildLatestJdkList();} }
 
 
-        private void SetVersionEnvironmentVariable()
-        {
-            foreach (var k in LatestJdk) {
-                EnvironmentVariables.SetEnvironmentVariable(k.Key, k.Value.Path, EnvironmentVariableTarget.Machine);
-            }
-        }
 
-        private readonly Regex _isJavaVersion = new Regex(@"^JAVA_[0-9]+");
-        private void CleanUpJavaVersionEnvironmentVariables(EnvironmentVariableTarget target, bool forceClear) {
-            var lines = new List<string>();
-            foreach (System.Collections.DictionaryEntry envVar in Environment.GetEnvironmentVariables(target))
-            {
-                var varName = envVar.Key.ToString();
-                if (_isJavaVersion.IsMatch(varName) && (forceClear || JavaJdk(envVar.Value.ToString(), "") == null)) {
-                    Environment.SetEnvironmentVariable(varName, null, target);
-                }
-            }
-        }
 
         private void CleanUpJavaVersionEnvironmentVariables()
         {
-            CleanUpJavaVersionEnvironmentVariables(EnvironmentVariableTarget.User, true);
-            CleanUpJavaVersionEnvironmentVariables(EnvironmentVariableTarget.Machine, false);
+            //_jdkFinder.CleanUpJavaVersionEnvironmentVariables(EnvironmentVariableTarget.User, true);
         }
 
         class DesiredJavaVersionSearchResult
@@ -143,13 +68,21 @@ namespace SwitcherUi.switching
             return new DesiredJavaVersionSearchResult { JavaVersion = null, TriedVersions = checkedList };
         }
 
+        private void SetUserVariableToTriggerRefresh(string value)
+        {
+            // might as well make it userful for bug finding
+            SetEnviromentVariableHelper.SetEnvironmentVariable(JdkFinder.JAVA_HOME + "_SWITCHER_LAST", value, EnvironmentVariableTarget.User);
+        }
+
         public override SwitchResult SwitchTo(Project project)
         {
-            SetVersionEnvironmentVariable();
             CleanUpJavaVersionEnvironmentVariables();
             var javaVersions = project.Settings.ArrayValue("JAVA");
+            var svc = new SwitchingServiceClient();
             if (javaVersions == null || javaVersions.Length ==0)
             {
+                svc.SetJavaEnvVars();
+                SetUserVariableToTriggerRefresh("Project Doesn't care");
                 return new SwitchResult
                 {
                     SourceName = Name,
@@ -158,16 +91,19 @@ namespace SwitcherUi.switching
                 };
             }
             var desiredFound = FindBestMatch(javaVersions);
+            string result = "";
             if (desiredFound.Found)
             {
-                EnvironmentVariables.SetEnvironmentVariable(JAVA_HOME, LatestJdk[desiredFound.JavaVersion].Path, EnvironmentVariableTarget.Machine);
+                result = svc.SetJavaHome(desiredFound.JavaVersion);
             }
+            SetUserVariableToTriggerRefresh(desiredFound.JavaVersion);
+            var versionSet = result == null || !result.StartsWith("ERROR");
             return new SwitchResult
                 {
                     SourceName = Name,
-                    Success = desiredFound.Found,
-                    Message = desiredFound.Message()
-                };
+                    Success = desiredFound.Found && versionSet,
+                    Message = versionSet ? desiredFound.Message() : desiredFound.Message() + " - " + result
+            };
         }
     }
 }

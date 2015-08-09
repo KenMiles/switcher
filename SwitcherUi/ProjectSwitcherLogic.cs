@@ -7,6 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using SwitcherCommon;
+using IConfiguration = SwitcherUi.config.IConfiguration;
 
 namespace SwitcherUi
 {

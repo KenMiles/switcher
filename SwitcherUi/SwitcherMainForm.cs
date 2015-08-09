@@ -15,7 +15,11 @@ using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using System.ServiceProcess;
 using System.IO;
+using SwitcherCommon;
 using SwitcherUi.switching.cfg;
+using SwitcherUi.ServiceReference1;
+using ConfigurationImpl = SwitcherUi.config.ConfigurationImpl;
+using IConfiguration = SwitcherUi.config.IConfiguration;
 
 namespace SwitcherUi
 {
@@ -89,24 +93,6 @@ namespace SwitcherUi
             _logic = new ProjectSwitcherLogic(_config, this, args);
         }
 
-
-
-        private void button4_Click(object sender, EventArgs e)
-        {
-            ServiceController service = new ServiceController("MySQL56");
-            try
-            {
-                TimeSpan timeout = TimeSpan.FromMilliseconds(20000);
-
-                service.Start();
-                service.WaitForStatus(ServiceControllerStatus.Running, timeout);
-                txtIssuesDisplay.Text = "Started";
-            }
-            catch (Exception ex)
-            {
-                txtIssuesDisplay.Text = ex.StackTrace;
-            }
-        }
 
         private void Form1_Resize(object sender, EventArgs e)
         {
@@ -217,6 +203,12 @@ namespace SwitcherUi
             if (_switchAndShut++ < 6 ) return;
             timerSwitch.Enabled = false;
             if (_logic.SwitchToCurrent()) Close();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+           var temp = new SwitchingServiceClient();
+            MessageBox.Show(string.Join("\r\n", temp.StartDatabase("Oracle")));
         }
     }
 

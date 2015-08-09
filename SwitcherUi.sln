@@ -1,9 +1,18 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.22823.1
+VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SwitcherUi", "SwitcherUi\SwitcherUi.csproj", "{C845609C-A2D2-4BBC-AC4B-BCF159A288FD}"
+	ProjectSection(ProjectDependencies) = postProject
+		{D324D838-B29D-4CAE-B251-552B9559AA96} = {D324D838-B29D-4CAE-B251-552B9559AA96}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SwitchinglSvc", "SwitchinglSvc\SwitchinglSvc.csproj", "{17BF14A0-57C4-4031-A1AB-854080B4D2ED}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SwitcherLibrary", "SwitcherLibrary\SwitcherLibrary.csproj", "{D324D838-B29D-4CAE-B251-552B9559AA96}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SwitcherCommon", "SwitcherCommon\SwitcherCommon.csproj", "{33C48347-C0E9-4E90-B330-2319B40E08BF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +24,18 @@ Global
 		{C845609C-A2D2-4BBC-AC4B-BCF159A288FD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C845609C-A2D2-4BBC-AC4B-BCF159A288FD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C845609C-A2D2-4BBC-AC4B-BCF159A288FD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{17BF14A0-57C4-4031-A1AB-854080B4D2ED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{17BF14A0-57C4-4031-A1AB-854080B4D2ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{17BF14A0-57C4-4031-A1AB-854080B4D2ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{17BF14A0-57C4-4031-A1AB-854080B4D2ED}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D324D838-B29D-4CAE-B251-552B9559AA96}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D324D838-B29D-4CAE-B251-552B9559AA96}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D324D838-B29D-4CAE-B251-552B9559AA96}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D324D838-B29D-4CAE-B251-552B9559AA96}.Release|Any CPU.Build.0 = Release|Any CPU
+		{33C48347-C0E9-4E90-B330-2319B40E08BF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{33C48347-C0E9-4E90-B330-2319B40E08BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{33C48347-C0E9-4E90-B330-2319B40E08BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{33C48347-C0E9-4E90-B330-2319B40E08BF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

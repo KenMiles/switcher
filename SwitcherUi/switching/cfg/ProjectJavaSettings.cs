@@ -8,6 +8,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using SwitcherCommon;
 using SwitcherUi.config;
 
 namespace SwitcherUi.switching.cfg
@@ -75,7 +76,7 @@ namespace SwitcherUi.switching.cfg
             return result;
         }
 
-        public void DisplayCurrent(Settings projectSettings, IConfiguration config, Project project)
+        public void DisplayCurrent(Settings projectSettings, config.IConfiguration config, Project project)
         {
             var switcher = new JavaHome(config);
             _availableJdks = switcher.LatestJdk;
@@ -88,7 +89,7 @@ namespace SwitcherUi.switching.cfg
             _lastSelected = _projectPreferredJdkVersion;
         }
 
-        public void SaveConfig(Settings projectSettings, IConfiguration config, Project project)
+        public void SaveConfig(Settings projectSettings, config.IConfiguration config, Project project)
         {
             projectSettings.SetArrayValue("JAVA", DesiredJavaVersions());
             projectSettings["JAVA Version"] = CurrentlySelected();

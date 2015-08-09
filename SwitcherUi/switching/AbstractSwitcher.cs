@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using SwitcherCommon;
 using SwitcherUi.config;
+using IConfiguration = SwitcherUi.config.IConfiguration;
 
 namespace SwitcherUi.switching
 {
