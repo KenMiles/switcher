@@ -1,0 +1,96 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="SwitchingService" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import namespace="http://tempuri.org/" />
+      <xsd:import namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="ISwitchingService_SetJavaHome_InputMessage">
+    <wsdl:part name="parameters" element="tns:SetJavaHome" />
+  </wsdl:message>
+  <wsdl:message name="ISwitchingService_SetJavaHome_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SetJavaHomeResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISwitchingService_SetJavaEnvVars_InputMessage">
+    <wsdl:part name="parameters" element="tns:SetJavaEnvVars" />
+  </wsdl:message>
+  <wsdl:message name="ISwitchingService_SetJavaEnvVars_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SetJavaEnvVarsResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISwitchingService_StartDatabase_InputMessage">
+    <wsdl:part name="parameters" element="tns:StartDatabase" />
+  </wsdl:message>
+  <wsdl:message name="ISwitchingService_StartDatabase_OutputMessage">
+    <wsdl:part name="parameters" element="tns:StartDatabaseResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISwitchingService_StopDatabase_InputMessage">
+    <wsdl:part name="parameters" element="tns:StopDatabase" />
+  </wsdl:message>
+  <wsdl:message name="ISwitchingService_StopDatabase_OutputMessage">
+    <wsdl:part name="parameters" element="tns:StopDatabaseResponse" />
+  </wsdl:message>
+  <wsdl:portType name="ISwitchingService">
+    <wsdl:operation name="SetJavaHome">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISwitchingService/SetJavaHome" message="tns:ISwitchingService_SetJavaHome_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISwitchingService/SetJavaHomeResponse" message="tns:ISwitchingService_SetJavaHome_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SetJavaEnvVars">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISwitchingService/SetJavaEnvVars" message="tns:ISwitchingService_SetJavaEnvVars_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISwitchingService/SetJavaEnvVarsResponse" message="tns:ISwitchingService_SetJavaEnvVars_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="StartDatabase">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISwitchingService/StartDatabase" message="tns:ISwitchingService_StartDatabase_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISwitchingService/StartDatabaseResponse" message="tns:ISwitchingService_StartDatabase_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="StopDatabase">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISwitchingService/StopDatabase" message="tns:ISwitchingService_StopDatabase_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISwitchingService/StopDatabaseResponse" message="tns:ISwitchingService_StopDatabase_OutputMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="BasicHttpBinding_ISwitchingService" type="tns:ISwitchingService">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="SetJavaHome">
+      <soap:operation soapAction="http://tempuri.org/ISwitchingService/SetJavaHome" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SetJavaEnvVars">
+      <soap:operation soapAction="http://tempuri.org/ISwitchingService/SetJavaEnvVars" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="StartDatabase">
+      <soap:operation soapAction="http://tempuri.org/ISwitchingService/StartDatabase" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="StopDatabase">
+      <soap:operation soapAction="http://tempuri.org/ISwitchingService/StopDatabase" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="SwitchingService">
+    <wsdl:port name="BasicHttpBinding_ISwitchingService" binding="tns:BasicHttpBinding_ISwitchingService">
+      <soap:address location="http://localhost:8733/Design_Time_Addresses/SwitcherLibrary/SwitchingService/" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
