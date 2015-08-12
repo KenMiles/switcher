@@ -43,13 +43,15 @@
             this.buttonSwitch = new System.Windows.Forms.Button();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.shutLocalDatabasesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.avoidProcessesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.substDriveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.javaHomeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.btnConfigureProject = new System.Windows.Forms.Button();
             this.timerSwitch = new System.Windows.Forms.Timer(this.components);
-            this.shutLocalDatabasesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnCopy = new System.Windows.Forms.Button();
+            this.btnNew = new System.Windows.Forms.Button();
             this.contextMenuStrip1.SuspendLayout();
             this.tabControlLogs.SuspendLayout();
             this.pageIssues.SuspendLayout();
@@ -196,6 +198,13 @@
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(35, 20);
             this.fileToolStripMenuItem.Text = "File";
             // 
+            // shutLocalDatabasesToolStripMenuItem
+            // 
+            this.shutLocalDatabasesToolStripMenuItem.Name = "shutLocalDatabasesToolStripMenuItem";
+            this.shutLocalDatabasesToolStripMenuItem.Size = new System.Drawing.Size(177, 22);
+            this.shutLocalDatabasesToolStripMenuItem.Text = "Shut Local Databases";
+            this.shutLocalDatabasesToolStripMenuItem.Click += new System.EventHandler(this.shutLocalDatabasesToolStripMenuItem_Click);
+            // 
             // settingsToolStripMenuItem
             // 
             this.settingsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -244,18 +253,37 @@
             this.timerSwitch.Interval = 1000;
             this.timerSwitch.Tick += new System.EventHandler(this.timerSwitch_Tick);
             // 
-            // shutLocalDatabasesToolStripMenuItem
+            // btnCopy
             // 
-            this.shutLocalDatabasesToolStripMenuItem.Name = "shutLocalDatabasesToolStripMenuItem";
-            this.shutLocalDatabasesToolStripMenuItem.Size = new System.Drawing.Size(177, 22);
-            this.shutLocalDatabasesToolStripMenuItem.Text = "Shut Local Databases";
-            this.shutLocalDatabasesToolStripMenuItem.Click += new System.EventHandler(this.shutLocalDatabasesToolStripMenuItem_Click);
+            this.btnCopy.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.btnCopy.Location = new System.Drawing.Point(440, 40);
+            this.btnCopy.Margin = new System.Windows.Forms.Padding(2);
+            this.btnCopy.Name = "btnCopy";
+            this.btnCopy.Size = new System.Drawing.Size(79, 21);
+            this.btnCopy.TabIndex = 12;
+            this.btnCopy.Text = "Copy Project";
+            this.btnCopy.UseVisualStyleBackColor = false;
+            this.btnCopy.Click += new System.EventHandler(this.btnCopy_Click);
+            // 
+            // btnNew
+            // 
+            this.btnNew.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.btnNew.Location = new System.Drawing.Point(533, 40);
+            this.btnNew.Margin = new System.Windows.Forms.Padding(2);
+            this.btnNew.Name = "btnNew";
+            this.btnNew.Size = new System.Drawing.Size(79, 21);
+            this.btnNew.TabIndex = 13;
+            this.btnNew.Text = "New Project";
+            this.btnNew.UseVisualStyleBackColor = false;
+            this.btnNew.Click += new System.EventHandler(this.btnNew_Click);
             // 
             // SwitcherMainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(856, 496);
+            this.Controls.Add(this.btnNew);
+            this.Controls.Add(this.btnCopy);
             this.Controls.Add(this.btnConfigureProject);
             this.Controls.Add(this.menuStrip1);
             this.Controls.Add(this.cbProject);
@@ -301,6 +329,8 @@
         private System.Windows.Forms.Button btnConfigureProject;
         private System.Windows.Forms.Timer timerSwitch;
         private System.Windows.Forms.ToolStripMenuItem shutLocalDatabasesToolStripMenuItem;
+        private System.Windows.Forms.Button btnCopy;
+        private System.Windows.Forms.Button btnNew;
     }
 }
 

@@ -30,15 +30,17 @@
         {
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabSubsDrive = new System.Windows.Forms.TabPage();
+            this.projectSubsDriveSettings1 = new SwitcherUi.switching.cfg.ProjectSubsDriveSettings();
             this.tabPageJavaHome = new System.Windows.Forms.TabPage();
+            this.projectJavaSettings1 = new SwitcherUi.switching.cfg.ProjectJavaSettings();
             this.tabEnvironmentVariables = new System.Windows.Forms.TabPage();
+            this.projectEnvVariablesSettings1 = new SwitcherUi.switching.cfg.ProjectEnvVariablesSettings();
+            this.tabDatabases = new System.Windows.Forms.TabPage();
+            this.projectDatabaseStarter1 = new SwitcherUi.switching.cfg.ProjectDatabaseStarter();
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnSave = new System.Windows.Forms.Button();
-            this.tabDatabases = new System.Windows.Forms.TabPage();
-            this.projectSubsDriveSettings1 = new SwitcherUi.switching.cfg.ProjectSubsDriveSettings();
-            this.projectJavaSettings1 = new SwitcherUi.switching.cfg.ProjectJavaSettings();
-            this.projectEnvVariablesSettings1 = new SwitcherUi.switching.cfg.ProjectEnvVariablesSettings();
-            this.projectDatabaseStarter1 = new SwitcherUi.switching.cfg.ProjectDatabaseStarter();
+            this.edtDisplayName = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tabSubsDrive.SuspendLayout();
             this.tabPageJavaHome.SuspendLayout();
@@ -52,7 +54,7 @@
             this.tabControl1.Controls.Add(this.tabPageJavaHome);
             this.tabControl1.Controls.Add(this.tabEnvironmentVariables);
             this.tabControl1.Controls.Add(this.tabDatabases);
-            this.tabControl1.Location = new System.Drawing.Point(12, 12);
+            this.tabControl1.Location = new System.Drawing.Point(12, 57);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
             this.tabControl1.Size = new System.Drawing.Size(772, 312);
@@ -69,6 +71,13 @@
             this.tabSubsDrive.Text = "Subst Drive";
             this.tabSubsDrive.UseVisualStyleBackColor = true;
             // 
+            // projectSubsDriveSettings1
+            // 
+            this.projectSubsDriveSettings1.Location = new System.Drawing.Point(7, 7);
+            this.projectSubsDriveSettings1.Name = "projectSubsDriveSettings1";
+            this.projectSubsDriveSettings1.Size = new System.Drawing.Size(747, 262);
+            this.projectSubsDriveSettings1.TabIndex = 0;
+            // 
             // tabPageJavaHome
             // 
             this.tabPageJavaHome.Controls.Add(this.projectJavaSettings1);
@@ -79,6 +88,13 @@
             this.tabPageJavaHome.TabIndex = 0;
             this.tabPageJavaHome.Text = "Java Home";
             this.tabPageJavaHome.UseVisualStyleBackColor = true;
+            // 
+            // projectJavaSettings1
+            // 
+            this.projectJavaSettings1.Location = new System.Drawing.Point(15, 6);
+            this.projectJavaSettings1.Name = "projectJavaSettings1";
+            this.projectJavaSettings1.Size = new System.Drawing.Size(743, 254);
+            this.projectJavaSettings1.TabIndex = 1;
             // 
             // tabEnvironmentVariables
             // 
@@ -91,30 +107,12 @@
             this.tabEnvironmentVariables.Text = "Environment Variables";
             this.tabEnvironmentVariables.UseVisualStyleBackColor = true;
             // 
-            // btnCancel
+            // projectEnvVariablesSettings1
             // 
-            this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnCancel.Location = new System.Drawing.Point(704, 350);
-            this.btnCancel.Margin = new System.Windows.Forms.Padding(2);
-            this.btnCancel.Name = "btnCancel";
-            this.btnCancel.Size = new System.Drawing.Size(76, 28);
-            this.btnCancel.TabIndex = 11;
-            this.btnCancel.Text = "Cancel";
-            this.btnCancel.UseVisualStyleBackColor = true;
-            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
-            // 
-            // btnSave
-            // 
-            this.btnSave.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnSave.Location = new System.Drawing.Point(623, 350);
-            this.btnSave.Margin = new System.Windows.Forms.Padding(2);
-            this.btnSave.Name = "btnSave";
-            this.btnSave.Size = new System.Drawing.Size(76, 28);
-            this.btnSave.TabIndex = 10;
-            this.btnSave.Text = "Save";
-            this.btnSave.UseVisualStyleBackColor = true;
-            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
+            this.projectEnvVariablesSettings1.Location = new System.Drawing.Point(6, 7);
+            this.projectEnvVariablesSettings1.Name = "projectEnvVariablesSettings1";
+            this.projectEnvVariablesSettings1.Size = new System.Drawing.Size(752, 273);
+            this.projectEnvVariablesSettings1.TabIndex = 0;
             // 
             // tabDatabases
             // 
@@ -127,27 +125,6 @@
             this.tabDatabases.Text = "Database";
             this.tabDatabases.UseVisualStyleBackColor = true;
             // 
-            // projectSubsDriveSettings1
-            // 
-            this.projectSubsDriveSettings1.Location = new System.Drawing.Point(7, 7);
-            this.projectSubsDriveSettings1.Name = "projectSubsDriveSettings1";
-            this.projectSubsDriveSettings1.Size = new System.Drawing.Size(747, 262);
-            this.projectSubsDriveSettings1.TabIndex = 0;
-            // 
-            // projectJavaSettings1
-            // 
-            this.projectJavaSettings1.Location = new System.Drawing.Point(15, 6);
-            this.projectJavaSettings1.Name = "projectJavaSettings1";
-            this.projectJavaSettings1.Size = new System.Drawing.Size(743, 254);
-            this.projectJavaSettings1.TabIndex = 1;
-            // 
-            // projectEnvVariablesSettings1
-            // 
-            this.projectEnvVariablesSettings1.Location = new System.Drawing.Point(6, 7);
-            this.projectEnvVariablesSettings1.Name = "projectEnvVariablesSettings1";
-            this.projectEnvVariablesSettings1.Size = new System.Drawing.Size(752, 273);
-            this.projectEnvVariablesSettings1.TabIndex = 0;
-            // 
             // projectDatabaseStarter1
             // 
             this.projectDatabaseStarter1.Location = new System.Drawing.Point(3, 6);
@@ -155,11 +132,54 @@
             this.projectDatabaseStarter1.Size = new System.Drawing.Size(755, 266);
             this.projectDatabaseStarter1.TabIndex = 0;
             // 
+            // btnCancel
+            // 
+            this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.btnCancel.Location = new System.Drawing.Point(704, 393);
+            this.btnCancel.Margin = new System.Windows.Forms.Padding(2);
+            this.btnCancel.Name = "btnCancel";
+            this.btnCancel.Size = new System.Drawing.Size(76, 28);
+            this.btnCancel.TabIndex = 11;
+            this.btnCancel.Text = "Cancel";
+            this.btnCancel.UseVisualStyleBackColor = true;
+            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
+            // 
+            // btnSave
+            // 
+            this.btnSave.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnSave.Location = new System.Drawing.Point(623, 393);
+            this.btnSave.Margin = new System.Windows.Forms.Padding(2);
+            this.btnSave.Name = "btnSave";
+            this.btnSave.Size = new System.Drawing.Size(76, 28);
+            this.btnSave.TabIndex = 10;
+            this.btnSave.Text = "Save";
+            this.btnSave.UseVisualStyleBackColor = true;
+            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
+            // 
+            // edtDisplayName
+            // 
+            this.edtDisplayName.Location = new System.Drawing.Point(93, 13);
+            this.edtDisplayName.Name = "edtDisplayName";
+            this.edtDisplayName.Size = new System.Drawing.Size(228, 20);
+            this.edtDisplayName.TabIndex = 12;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(16, 13);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(71, 13);
+            this.label1.TabIndex = 13;
+            this.label1.Text = "Project Name";
+            // 
             // ProjectConfigForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(796, 401);
+            this.ClientSize = new System.Drawing.Size(796, 444);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.edtDisplayName);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.tabControl1);
@@ -171,6 +191,7 @@
             this.tabEnvironmentVariables.ResumeLayout(false);
             this.tabDatabases.ResumeLayout(false);
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -187,5 +208,7 @@
         private switching.cfg.ProjectEnvVariablesSettings projectEnvVariablesSettings1;
         private System.Windows.Forms.TabPage tabDatabases;
         private switching.cfg.ProjectDatabaseStarter projectDatabaseStarter1;
+        private System.Windows.Forms.TextBox edtDisplayName;
+        private System.Windows.Forms.Label label1;
     }
 }

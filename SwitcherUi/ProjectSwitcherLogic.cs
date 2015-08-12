@@ -22,7 +22,7 @@ namespace SwitcherUi
         void DisplayCurrentProject(string project);
         void ListProjects(Project[] projects, Project select);
         void ShowCanSwitchStatus(EnumCanSwitch status, string[] messages);
-        bool ConfigureProject(Project project);
+        bool ConfigureProject(Project project, Project sourceProject);
         void StartAutoSwitchAndClose();
     }
 
@@ -168,23 +168,52 @@ namespace SwitcherUi
             DoSwitch(_projectManager.Project(_config.CurrentProject));
         }
 
-        public void ConfigureProject(Project project)
+        private bool CheckProjectSelected(Project project, string messageTitle)
         {
-            if (project == null)
+            if (project != null) return true;
+            _userFeedback.ErrorMessage(messageTitle, "No Project Selected");
+            return false;
+        }
+
+        private bool DoConfigureProject(Project project, Project soureProject, string messageTitle)
+        {
+            if (!CheckProjectSelected(project, messageTitle)) return false;
+            var isCurrent = project.Name == _config.CurrentProject;
+            if (isCurrent && !CheckCanSwitch(PerformingAction.Config, "Config"))
             {
-                _userFeedback.ErrorMessage("Configure Project", "No Project Selelected");
-                return;
+                return false;
             }
-            if (!CheckCanSwitch(PerformingAction.Config, "Config"))
-            {
-                return;
-            }
+            if (!string.IsNullOrWhiteSpace(project.Name)) _projectManager.RefreshProject(project);
+            if (soureProject != null && project != soureProject) _projectManager.RefreshProject(soureProject);
+            if (!_userFeedback.ConfigureProject(project, soureProject)) return true;
             _projectManager.RefreshProject(project);
-            if (!_userFeedback.ConfigureProject(project)
-                || project.Name != _config.CurrentProject
+            var projs = _projectManager.Projects();
+            var selected = projs.FirstOrDefault(p => p.Name == project.Name) ?? projs.FirstOrDefault(p => p.Name == soureProject?.Name);
+            _userFeedback.ListProjects(projs, selected);
+            if (!isCurrent
                 || !_userFeedback.WarningAsk("Update Enviroment", "Current Project configuration has been changed, update enviroment?")
-                || !CheckCanSwitch(PerformingAction.Switch, project.Name)) return;
+                || !CheckCanSwitch(PerformingAction.Switch, project.Name))
+                return true;
             DoSwitch(_projectManager.Project(_config.CurrentProject));
+            return true;
+        }
+
+        public bool ConfigureProject(Project project)
+        {
+            return DoConfigureProject(project, project, "Configure Project");
+        }
+
+        public bool CopyProject(Project sourceProject)
+        {
+            if (!CheckProjectSelected(sourceProject, "Copy Project")) return false;
+            var project = Project.EmptyProject(sourceProject.DisplayName + " Copy of");
+            return DoConfigureProject(project, sourceProject, "Copy Project");
+        }
+
+        public bool NewProject()
+        {
+            var project = Project.EmptyProject("New Project");
+            return DoConfigureProject(project, project, "New Project");
         }
 
         public void ShutLocalDatabases()

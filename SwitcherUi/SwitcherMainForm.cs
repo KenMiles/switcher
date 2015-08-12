@@ -48,7 +48,7 @@ namespace SwitcherUi
 
         public void ListProjects(Project[] projects, Project select) {
             cbProject.DataSource = _logic.AllProjects();
-            cbProject.DisplayMember = "Name";
+            cbProject.DisplayMember = "DisplayName";
             cbProject.SelectedIndex = projects.ToList().IndexOf(select);
         }
 
@@ -169,9 +169,9 @@ namespace SwitcherUi
             _logic.DoConfig(() => new FrmJavaHomeCfg(_config));
         }
 
-        public bool ConfigureProject(Project project)
+        public bool ConfigureProject(Project project, Project sourceProject)
         {
-            var frm = new ProjectConfigForm(_config, project);
+            var frm = new ProjectConfigForm(_config, project, sourceProject);
             return frm.ShowDialog() == DialogResult.OK;
         }
 
@@ -200,6 +200,16 @@ namespace SwitcherUi
         private void shutLocalDatabasesToolStripMenuItem_Click(object sender, EventArgs e)
         {
             _logic.ShutLocalDatabases();
+        }
+
+        private void btnCopy_Click(object sender, EventArgs e)
+        {
+            _logic.CopyProject((Project)cbProject.SelectedItem);
+        }
+
+        private void btnNew_Click(object sender, EventArgs e)
+        {
+            _logic.NewProject();
         }
     }
 

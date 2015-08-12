@@ -13,11 +13,17 @@ namespace SwitcherUi.config
             _config = config;
         }
 
-        public Project Project(string name) {
+        public Project Project(string name)
+        {
             return new Project {
                 Name = name,
-                Settings = _config[name]
+                Settings = _config[name],
             };
+        }
+
+        public Project CurrentProject()
+        {
+            return Project(_config.CurrentProject);
         }
 
         public void RefreshProject(Project project)
@@ -28,7 +34,12 @@ namespace SwitcherUi.config
 
         public Project[] Projects()
         {
-            return _config.ProjectNames.Select(Project).OrderBy(p => p.Name.ToUpper()).ToArray();
+            return _config.ProjectNames.Select(Project).OrderBy(p => p.DisplayName.ToUpper()).ToArray();
+        }
+
+        public Dictionary<string, string> ProjectNames()
+        {
+            return Projects().ToDictionary(p => p.Name, p => p.DisplayName, StringComparer.InvariantCultureIgnoreCase);
         }
     }
 }
