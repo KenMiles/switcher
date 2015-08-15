@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace SwitcherCommon
 {
@@ -26,10 +27,15 @@ namespace SwitcherCommon
             return defaultValue;
         }
 
-        public string[] ArrayValue(string key, string defaultValues = "")
-        {
+        private string[] GetArrayValue(string key, string defaultValues = "") { 
             if (Values.ContainsKey(key)) return (Values[key]??"").Split(';');
             return (defaultValues??"").Split(';');
+        }
+        public string[] ArrayValue(string key, string defaultValues = "")
+        {
+            return (GetArrayValue(key, defaultValues) ?? new string[0])
+                .Where(s => !string.IsNullOrWhiteSpace(s))
+                .ToArray();
         }
 
         public void SetArrayValue(string key, string[] value)
