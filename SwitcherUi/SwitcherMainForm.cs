@@ -8,9 +8,11 @@ using SwitcherUi.allowSwitching;
 using System.Linq;
 using System.Collections.Generic;
 using SwitcherCommon;
+using SwitcherUi.allowSwitching.cfg;
 using SwitcherUi.switching.cfg;
 using ConfigurationImpl = SwitcherUi.config.ConfigurationImpl;
 using IConfiguration = SwitcherUi.config.IConfiguration;
+using SwitcherUi.switching;
 
 namespace SwitcherUi
 {
@@ -116,7 +118,7 @@ namespace SwitcherUi
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            _logic.ReadCurrentProject();
+            _logic.OnSetup();
             _logic.CheckCanSwitch();
 
         }
@@ -130,7 +132,7 @@ namespace SwitcherUi
 
         private void buttonSwitch_Click(object sender, EventArgs e)
         {
-            var result = _logic.SwitchTo((Project)cbProject.SelectedItem);
+            _logic.SwitchTo((Project)cbProject.SelectedItem);
         }
 
         private void tabControlLogs_TabIndexChanged(object sender, EventArgs e)
@@ -149,29 +151,10 @@ namespace SwitcherUi
             }
         }
 
-        private void avoidProcessesToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            _logic.DoConfig(() => new ProcessesForm(_config));
-        }
 
-        private void txtIssuesDisplay_TextChanged(object sender, EventArgs e)
+        public bool ConfigureProject(IEnumerable<ProjectConfig> projectConfig, Project project, Project sourceProject)
         {
-
-        }
-
-        private void substDriveToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            _logic.DoConfig(() => new FrmSubstDriveCfg(_config));
-        }
-
-        private void javaHomeToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            _logic.DoConfig(() => new FrmJavaHomeCfg(_config));
-        }
-
-        public bool ConfigureProject(Project project, Project sourceProject)
-        {
-            var frm = new ProjectConfigForm(_config, project, sourceProject);
+            var frm = new ProjectConfigForm(_config, projectConfig, project, sourceProject);
             return frm.ShowDialog() == DialogResult.OK;
         }
 
@@ -210,6 +193,18 @@ namespace SwitcherUi
         private void btnNew_Click(object sender, EventArgs e)
         {
             _logic.NewProject();
+        }
+
+        public void AddConfigMenuItems(IEnumerable<ConfigMenuOptions> configMenuOptions)
+        {
+            var menuEntries = configMenuOptions.Where(c => c?.CreateConfigForm != null).Select(c =>
+            {
+                var menuEntry = new ToolStripMenuItem(c.MenuText);
+                // watch this - two nested lambdas 
+                menuEntry.Click += (sender, e) => _logic.DoConfig(() => c.CreateConfigForm(_config));
+                return (ToolStripItem)menuEntry;
+            });
+            settingsToolStripMenuItem.DropDownItems.AddRange(menuEntries.ToArray());
         }
     }
 

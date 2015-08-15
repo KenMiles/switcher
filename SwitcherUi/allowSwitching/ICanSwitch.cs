@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using SwitcherUi.config;
 
 namespace SwitcherUi.allowSwitching
 {
@@ -16,5 +17,6 @@ namespace SwitcherUi.allowSwitching
     interface ICanSwitch
     {
         CanSwitchResult CanSwitch();
+        ConfigMenuOptions ConfigureAction();
     }
 }

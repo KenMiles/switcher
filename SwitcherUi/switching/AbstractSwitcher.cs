@@ -40,5 +40,8 @@ namespace SwitcherUi.switching
         {
             return Result(true, "Not Required");
         }
+
+        public abstract ConfigMenuOptions ConfigureAction();
+        public abstract ProjectConfig ProjectConfig();
     }
 }

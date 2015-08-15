@@ -9,6 +9,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using SwitcherUi.config;
+using SwitcherUi.switching;
 using SwitcherUi.switching.cfg;
 
 namespace SwitcherUi
@@ -27,15 +28,56 @@ namespace SwitcherUi
             return controls.SelectMany(GetAll).Concat(controls).Where(IsProjectConfigControl);
         }
 
+        /*            
+            //tabControl1.SuspendLayout();
+            //tab.SuspendLayout();
+            //Controls.Add(tab);
+
+            tabControl1.TabPages.Add(tab);
+            var test = new ProjectJavaSettings
+            {
+                Location = new Point(0, 0),
+                Size = new Size(747, 262),
+            };
+            tab.Controls.Add(test);
+*/
+
         private readonly IConfiguration _config;
         private readonly Project _project;
         private readonly List<IProjectItem> _projectConfigItems;
         private readonly Dictionary<string, string> _projectNames;
         private readonly List<string> _projectDisplayNames;
 
-        public ProjectConfigForm(IConfiguration config, Project project, Project sourceProject = null)
+        private const int TabHeight = 262;
+        private const int TabWidth = 747;
+        private const int TabPadding = 3;
+
+        private int NextTabIndex = 1;
+
+        private TabPage TabPage(ProjectConfig cfg)
+        {
+            if (cfg?.CreateControl == null) return null;
+            var tab = new TabPage
+            {
+                Location = new Point(0, 0),
+                Padding = new Padding(TabPadding),
+                Size = new Size(TabWidth, TabHeight),
+                TabIndex = NextTabIndex++,
+                Text = cfg.SectionCaption,
+                UseVisualStyleBackColor = true
+            };
+            var control = cfg.CreateControl();
+            control.Location = new Point(0, 0);
+            control.Size = new Size(TabWidth, TabHeight);
+            tab.Controls.Add(control);
+            return tab;
+        }
+
+        public ProjectConfigForm(IConfiguration config, IEnumerable<ProjectConfig> projectConfig, Project project, Project sourceProject = null)
         {
             InitializeComponent();
+            if (projectConfig == null) throw new ArgumentNullException(nameof(projectConfig));
+            tabControlConfigurations.TabPages.AddRange(projectConfig.Select(TabPage).Where(t => t != null).ToArray());
             _config = config;
             _project = project;
             var source = sourceProject ?? project;
@@ -48,7 +90,7 @@ namespace SwitcherUi
             Text = "Configuration for Project '" + project.DisplayName + "'";
         }
 
-        private ProjectConfigForm(IConfiguration config) : this(config, new ProjectManager(config).CurrentProject())
+        private ProjectConfigForm(IConfiguration config) : this(config, new Switcher(config).ProjectConfigOptions(),   new ProjectManager(config).CurrentProject())
         {
         }
 
@@ -103,5 +145,7 @@ namespace SwitcherUi
         {
             DialogResult = DialogResult.Cancel;
         }
+
+
     }
 }

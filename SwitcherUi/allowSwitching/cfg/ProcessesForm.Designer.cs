@@ -1,4 +1,4 @@
-﻿namespace SwitcherUi
+﻿namespace SwitcherUi.allowSwitching.cfg
 {
     partial class ProcessesForm
     {

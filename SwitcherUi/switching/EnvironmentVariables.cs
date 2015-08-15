@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using SwitcherUi.config;
+using SwitcherUi.switching.cfg;
 
 namespace SwitcherUi.switching
 {
@@ -29,6 +30,20 @@ namespace SwitcherUi.switching
             }
             var names = settings.Values.Select(v => v.Key).ToArray();
             return Result(true, names.Length == 0 ?  NoEnvironmentVariables : SetEnvironmentVariables + string.Join(",", names));
+        }
+
+        public override ConfigMenuOptions ConfigureAction()
+        {
+            return new ConfigMenuOptions
+            {
+                MenuText = "Environment Variables Config (TBI)",
+                CreateConfigForm = null //TODO Config Frm If Required (should filter out creating menus) - c => new FrmJavaHomeCfg(c)
+            };
+        }
+
+        public override ProjectConfig ProjectConfig()
+        {
+            return new ProjectConfig {CreateControl  = ()=> new ProjectEnvVariablesSettings(), SectionCaption = "Environment Variables" };
         }
     }
 }

@@ -38,5 +38,10 @@ namespace SwitcherUi.allowSwitching
             };
         }
 
+        public IEnumerable<ConfigMenuOptions> ConfigMenuOptions()
+        {
+            return _canSwitches.Select(c => c.ConfigureAction());
+        }
+
     }
 }

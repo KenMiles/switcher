@@ -7,6 +7,7 @@ using SwitcherUi.config;
 using System.Runtime.InteropServices;
 using System.IO;
 using System.Text.RegularExpressions;
+using SwitcherUi.switching.cfg;
 
 namespace SwitcherUi.switching
 {
@@ -111,6 +112,20 @@ namespace SwitcherUi.switching
         {
             var removed = RemoveDrive();
             return Result(removed, string.Format(removed ? "Drive {0} removed/not susbt": "Unable to remove Drive {0}", Drive) );
+        }
+
+        public override ConfigMenuOptions ConfigureAction()
+        {
+            return new ConfigMenuOptions
+            {
+                MenuText = "Subst Drive",
+                CreateConfigForm = c => new FrmSubstDriveCfg(c)
+            };
+        }
+
+        public override ProjectConfig ProjectConfig()
+        {
+            return new ProjectConfig { CreateControl = () => new ProjectSubsDriveSettings(), SectionCaption = "Subst Drive" };
         }
     }
 }

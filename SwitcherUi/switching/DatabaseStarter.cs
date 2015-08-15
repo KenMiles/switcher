@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using SwitcherUi.config;
+using SwitcherUi.switching.cfg;
 using SwitcherUi.ServiceReference1;
 
 namespace SwitcherUi.switching
@@ -37,6 +38,20 @@ namespace SwitcherUi.switching
                 return Result(false, $"Issues starting databases '{db}' - {e.Message}");
             }
 
+        }
+
+        public override ConfigMenuOptions ConfigureAction()
+        {
+            return new ConfigMenuOptions
+            {
+                MenuText = "Database Start Config (TBI)",
+                CreateConfigForm = null //TODO DB Config (should filter out creating menus) - c => new FrmJavaHomeCfg(c)
+            };
+        }
+
+        public override ProjectConfig ProjectConfig()
+        {
+            return new ProjectConfig {CreateControl = () => new ProjectDatabaseStarter(), SectionCaption = "Database Starter"};
         }
     }
 }

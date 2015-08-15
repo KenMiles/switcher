@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using SwitcherUi.config;
 using System.Text.RegularExpressions;
 using SwitcherCommon;
+using SwitcherUi.switching.cfg;
 using SwitcherUi.ServiceReference1;
 
 namespace SwitcherUi.switching
@@ -104,6 +105,20 @@ namespace SwitcherUi.switching
                     Success = desiredFound.Found && versionSet,
                     Message = versionSet ? desiredFound.Message() : desiredFound.Message() + " - " + result
             };
+        }
+
+        public override ConfigMenuOptions ConfigureAction()
+        {
+            return new ConfigMenuOptions
+            {
+                MenuText = "Java Home",
+                CreateConfigForm = c => new FrmJavaHomeCfg(c)
+            };
+        }
+
+        public override ProjectConfig ProjectConfig()
+        {
+            return new ProjectConfig { CreateControl = () => new ProjectJavaSettings(), SectionCaption = "Java Home" };
         }
     }
 }

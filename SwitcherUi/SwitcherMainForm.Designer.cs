@@ -45,9 +45,6 @@
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.shutLocalDatabasesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.avoidProcessesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.substDriveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.javaHomeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.btnConfigureProject = new System.Windows.Forms.Button();
             this.timerSwitch = new System.Windows.Forms.Timer(this.components);
             this.btnCopy = new System.Windows.Forms.Button();
@@ -122,7 +119,6 @@
             this.txtIssuesDisplay.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.txtIssuesDisplay.Size = new System.Drawing.Size(824, 376);
             this.txtIssuesDisplay.TabIndex = 1;
-            this.txtIssuesDisplay.TextChanged += new System.EventHandler(this.txtIssuesDisplay_TextChanged);
             // 
             // pageSwitchLog
             // 
@@ -207,34 +203,9 @@
             // 
             // settingsToolStripMenuItem
             // 
-            this.settingsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.avoidProcessesToolStripMenuItem,
-            this.substDriveToolStripMenuItem,
-            this.javaHomeToolStripMenuItem});
             this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
             this.settingsToolStripMenuItem.Size = new System.Drawing.Size(58, 20);
             this.settingsToolStripMenuItem.Text = "Settings";
-            // 
-            // avoidProcessesToolStripMenuItem
-            // 
-            this.avoidProcessesToolStripMenuItem.Name = "avoidProcessesToolStripMenuItem";
-            this.avoidProcessesToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.avoidProcessesToolStripMenuItem.Text = "Avoid Processes";
-            this.avoidProcessesToolStripMenuItem.Click += new System.EventHandler(this.avoidProcessesToolStripMenuItem_Click);
-            // 
-            // substDriveToolStripMenuItem
-            // 
-            this.substDriveToolStripMenuItem.Name = "substDriveToolStripMenuItem";
-            this.substDriveToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.substDriveToolStripMenuItem.Text = "Subst Drive";
-            this.substDriveToolStripMenuItem.Click += new System.EventHandler(this.substDriveToolStripMenuItem_Click);
-            // 
-            // javaHomeToolStripMenuItem
-            // 
-            this.javaHomeToolStripMenuItem.Name = "javaHomeToolStripMenuItem";
-            this.javaHomeToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.javaHomeToolStripMenuItem.Text = "Java Home";
-            this.javaHomeToolStripMenuItem.Click += new System.EventHandler(this.javaHomeToolStripMenuItem_Click);
             // 
             // btnConfigureProject
             // 
@@ -323,9 +294,6 @@
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem settingsToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem avoidProcessesToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem substDriveToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem javaHomeToolStripMenuItem;
         private System.Windows.Forms.Button btnConfigureProject;
         private System.Windows.Forms.Timer timerSwitch;
         private System.Windows.Forms.ToolStripMenuItem shutLocalDatabasesToolStripMenuItem;

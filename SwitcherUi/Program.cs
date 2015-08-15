@@ -17,8 +17,8 @@ namespace SwitcherUi
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new SwitcherMainForm());
-            //Application.Run(new ProjectConfigForm());
+            //Application.Run(new SwitcherMainForm());
+            Application.Run(new ProjectConfigForm());
         }
     }
 }

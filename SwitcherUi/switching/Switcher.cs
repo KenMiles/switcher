@@ -94,5 +94,15 @@ namespace SwitcherUi.switching
             return new SwitchedResult(null, _switchers.Select(s => s.MakeReadyForConfig()).ToArray());
         }
 
+        public IEnumerable<ConfigMenuOptions> ConfigMenuOptions()
+        {
+            return _switchers.Select(c => c.ConfigureAction());
+        }
+
+        public IEnumerable<ProjectConfig> ProjectConfigOptions()
+        {
+            return _switchers.Select(c => c.ProjectConfig());
+        }
+
     }
 }

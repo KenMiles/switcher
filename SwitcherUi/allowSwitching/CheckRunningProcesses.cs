@@ -5,6 +5,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using SwitcherCommon;
+using SwitcherUi.allowSwitching.cfg;
+using SwitcherUi.config;
 using IConfiguration = SwitcherUi.config.IConfiguration;
 
 namespace SwitcherUi.allowSwitching
@@ -50,6 +52,15 @@ namespace SwitcherUi.allowSwitching
                 Warning = Messages("The Following Processes are running:", warningProcesses, warning)
             };
 
+        }
+
+        public ConfigMenuOptions ConfigureAction()
+        {
+            return new ConfigMenuOptions
+            {
+                MenuText = "Avoid Processes",
+                CreateConfigForm = c => new ProcessesForm(_config)
+            };
         }
     }
 }

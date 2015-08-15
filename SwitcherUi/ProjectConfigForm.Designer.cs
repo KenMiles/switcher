@@ -28,109 +28,12 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.tabControl1 = new System.Windows.Forms.TabControl();
-            this.tabSubsDrive = new System.Windows.Forms.TabPage();
-            this.projectSubsDriveSettings1 = new SwitcherUi.switching.cfg.ProjectSubsDriveSettings();
-            this.tabPageJavaHome = new System.Windows.Forms.TabPage();
-            this.projectJavaSettings1 = new SwitcherUi.switching.cfg.ProjectJavaSettings();
-            this.tabEnvironmentVariables = new System.Windows.Forms.TabPage();
-            this.projectEnvVariablesSettings1 = new SwitcherUi.switching.cfg.ProjectEnvVariablesSettings();
-            this.tabDatabases = new System.Windows.Forms.TabPage();
-            this.projectDatabaseStarter1 = new SwitcherUi.switching.cfg.ProjectDatabaseStarter();
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnSave = new System.Windows.Forms.Button();
             this.edtDisplayName = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.tabControl1.SuspendLayout();
-            this.tabSubsDrive.SuspendLayout();
-            this.tabPageJavaHome.SuspendLayout();
-            this.tabEnvironmentVariables.SuspendLayout();
-            this.tabDatabases.SuspendLayout();
+            this.tabControlConfigurations = new System.Windows.Forms.TabControl();
             this.SuspendLayout();
-            // 
-            // tabControl1
-            // 
-            this.tabControl1.Controls.Add(this.tabSubsDrive);
-            this.tabControl1.Controls.Add(this.tabPageJavaHome);
-            this.tabControl1.Controls.Add(this.tabEnvironmentVariables);
-            this.tabControl1.Controls.Add(this.tabDatabases);
-            this.tabControl1.Location = new System.Drawing.Point(12, 57);
-            this.tabControl1.Name = "tabControl1";
-            this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(772, 312);
-            this.tabControl1.TabIndex = 1;
-            // 
-            // tabSubsDrive
-            // 
-            this.tabSubsDrive.Controls.Add(this.projectSubsDriveSettings1);
-            this.tabSubsDrive.Location = new System.Drawing.Point(4, 22);
-            this.tabSubsDrive.Name = "tabSubsDrive";
-            this.tabSubsDrive.Padding = new System.Windows.Forms.Padding(3);
-            this.tabSubsDrive.Size = new System.Drawing.Size(764, 286);
-            this.tabSubsDrive.TabIndex = 1;
-            this.tabSubsDrive.Text = "Subst Drive";
-            this.tabSubsDrive.UseVisualStyleBackColor = true;
-            // 
-            // projectSubsDriveSettings1
-            // 
-            this.projectSubsDriveSettings1.Location = new System.Drawing.Point(7, 7);
-            this.projectSubsDriveSettings1.Name = "projectSubsDriveSettings1";
-            this.projectSubsDriveSettings1.Size = new System.Drawing.Size(747, 262);
-            this.projectSubsDriveSettings1.TabIndex = 0;
-            // 
-            // tabPageJavaHome
-            // 
-            this.tabPageJavaHome.Controls.Add(this.projectJavaSettings1);
-            this.tabPageJavaHome.Location = new System.Drawing.Point(4, 22);
-            this.tabPageJavaHome.Name = "tabPageJavaHome";
-            this.tabPageJavaHome.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageJavaHome.Size = new System.Drawing.Size(764, 286);
-            this.tabPageJavaHome.TabIndex = 0;
-            this.tabPageJavaHome.Text = "Java Home";
-            this.tabPageJavaHome.UseVisualStyleBackColor = true;
-            // 
-            // projectJavaSettings1
-            // 
-            this.projectJavaSettings1.Location = new System.Drawing.Point(15, 6);
-            this.projectJavaSettings1.Name = "projectJavaSettings1";
-            this.projectJavaSettings1.Size = new System.Drawing.Size(743, 254);
-            this.projectJavaSettings1.TabIndex = 1;
-            // 
-            // tabEnvironmentVariables
-            // 
-            this.tabEnvironmentVariables.Controls.Add(this.projectEnvVariablesSettings1);
-            this.tabEnvironmentVariables.Location = new System.Drawing.Point(4, 22);
-            this.tabEnvironmentVariables.Name = "tabEnvironmentVariables";
-            this.tabEnvironmentVariables.Padding = new System.Windows.Forms.Padding(3);
-            this.tabEnvironmentVariables.Size = new System.Drawing.Size(764, 286);
-            this.tabEnvironmentVariables.TabIndex = 2;
-            this.tabEnvironmentVariables.Text = "Environment Variables";
-            this.tabEnvironmentVariables.UseVisualStyleBackColor = true;
-            // 
-            // projectEnvVariablesSettings1
-            // 
-            this.projectEnvVariablesSettings1.Location = new System.Drawing.Point(6, 7);
-            this.projectEnvVariablesSettings1.Name = "projectEnvVariablesSettings1";
-            this.projectEnvVariablesSettings1.Size = new System.Drawing.Size(752, 273);
-            this.projectEnvVariablesSettings1.TabIndex = 0;
-            // 
-            // tabDatabases
-            // 
-            this.tabDatabases.Controls.Add(this.projectDatabaseStarter1);
-            this.tabDatabases.Location = new System.Drawing.Point(4, 22);
-            this.tabDatabases.Name = "tabDatabases";
-            this.tabDatabases.Padding = new System.Windows.Forms.Padding(3);
-            this.tabDatabases.Size = new System.Drawing.Size(764, 286);
-            this.tabDatabases.TabIndex = 3;
-            this.tabDatabases.Text = "Database";
-            this.tabDatabases.UseVisualStyleBackColor = true;
-            // 
-            // projectDatabaseStarter1
-            // 
-            this.projectDatabaseStarter1.Location = new System.Drawing.Point(3, 6);
-            this.projectDatabaseStarter1.Name = "projectDatabaseStarter1";
-            this.projectDatabaseStarter1.Size = new System.Drawing.Size(755, 266);
-            this.projectDatabaseStarter1.TabIndex = 0;
             // 
             // btnCancel
             // 
@@ -173,6 +76,14 @@
             this.label1.TabIndex = 13;
             this.label1.Text = "Project Name";
             // 
+            // tabControlConfigurations
+            // 
+            this.tabControlConfigurations.Location = new System.Drawing.Point(12, 57);
+            this.tabControlConfigurations.Name = "tabControlConfigurations";
+            this.tabControlConfigurations.SelectedIndex = 0;
+            this.tabControlConfigurations.Size = new System.Drawing.Size(772, 312);
+            this.tabControlConfigurations.TabIndex = 1;
+            // 
             // ProjectConfigForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -182,33 +93,19 @@
             this.Controls.Add(this.edtDisplayName);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnSave);
-            this.Controls.Add(this.tabControl1);
+            this.Controls.Add(this.tabControlConfigurations);
             this.Name = "ProjectConfigForm";
             this.Text = "ProjectConfig";
-            this.tabControl1.ResumeLayout(false);
-            this.tabSubsDrive.ResumeLayout(false);
-            this.tabPageJavaHome.ResumeLayout(false);
-            this.tabEnvironmentVariables.ResumeLayout(false);
-            this.tabDatabases.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
 
         #endregion
-
-        private System.Windows.Forms.TabControl tabControl1;
-        private System.Windows.Forms.TabPage tabPageJavaHome;
-        private switching.cfg.ProjectJavaSettings projectJavaSettings1;
         private System.Windows.Forms.Button btnCancel;
         private System.Windows.Forms.Button btnSave;
-        private System.Windows.Forms.TabPage tabSubsDrive;
-        private switching.cfg.ProjectSubsDriveSettings projectSubsDriveSettings1;
-        private System.Windows.Forms.TabPage tabEnvironmentVariables;
-        private switching.cfg.ProjectEnvVariablesSettings projectEnvVariablesSettings1;
-        private System.Windows.Forms.TabPage tabDatabases;
-        private switching.cfg.ProjectDatabaseStarter projectDatabaseStarter1;
         private System.Windows.Forms.TextBox edtDisplayName;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.TabControl tabControlConfigurations;
     }
 }

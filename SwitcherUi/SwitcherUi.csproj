@@ -68,6 +68,7 @@
     <Compile Include="allowSwitching\cfg\ProcessesForm.Designer.cs">
       <DependentUpon>ProcessesForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="config\ConfigMenuOptions.cs" />
     <Compile Include="config\IConfiguration.cs" />
     <Compile Include="config\ConfigurationImpl.cs" />
     <Compile Include="config\Project.cs" />

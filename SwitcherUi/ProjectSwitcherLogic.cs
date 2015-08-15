@@ -22,8 +22,9 @@ namespace SwitcherUi
         void DisplayCurrentProject(string project);
         void ListProjects(Project[] projects, Project select);
         void ShowCanSwitchStatus(EnumCanSwitch status, string[] messages);
-        bool ConfigureProject(Project project, Project sourceProject);
+        bool ConfigureProject(IEnumerable<ProjectConfig> projectConfig, Project project, Project sourceProject);
         void StartAutoSwitchAndClose();
+        void AddConfigMenuItems(IEnumerable<ConfigMenuOptions> configMenuOptions);
     }
 
 
@@ -143,9 +144,10 @@ namespace SwitcherUi
 
         private Project _current;
 
-        public void ReadCurrentProject() {
+        public void OnSetup() {
             var current = _config.CurrentProject;
             _userFeedback.DisplayCurrentProject(current);
+            _userFeedback.AddConfigMenuItems(_canSwitch.ConfigMenuOptions().Concat(_switcher.ConfigMenuOptions()));
             var projects = AllProjects();
             _current = Selected(projects, current);
             _userFeedback.ListProjects(projects, _current);
@@ -185,7 +187,7 @@ namespace SwitcherUi
             }
             if (!string.IsNullOrWhiteSpace(project.Name)) _projectManager.RefreshProject(project);
             if (soureProject != null && project != soureProject) _projectManager.RefreshProject(soureProject);
-            if (!_userFeedback.ConfigureProject(project, soureProject)) return true;
+            if (!_userFeedback.ConfigureProject(_switcher.ProjectConfigOptions(), project, soureProject)) return true;
             _projectManager.RefreshProject(project);
             var projs = _projectManager.Projects();
             var selected = projs.FirstOrDefault(p => p.Name == project.Name) ?? projs.FirstOrDefault(p => p.Name == soureProject?.Name);
