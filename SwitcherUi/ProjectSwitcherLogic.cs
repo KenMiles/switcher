@@ -139,7 +139,7 @@ namespace SwitcherUi
 
         private Project Selected(Project[] projects, string projectName) {
             if (projects == null || projects.Length == 0 || string.IsNullOrWhiteSpace(projectName)) return null;
-            return projects.First(p => projectName == p.Name);
+            return projects.FirstOrDefault(p => projectName == p.Name);
         }
 
         private Project _current;
