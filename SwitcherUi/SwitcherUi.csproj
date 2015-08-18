@@ -135,6 +135,12 @@
     </Compile>
     <Compile Include="switching\DatabaseStarter.cs" />
     <Compile Include="switching\EnvironmentVariables.cs" />
+    <Compile Include="switching\cfg\FrmDatabaseServices.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="switching\cfg\FrmDatabaseServices.Designer.cs">
+      <DependentUpon>FrmDatabaseServices.cs</DependentUpon>
+    </Compile>
     <Compile Include="switching\ISwitch.cs" />
     <Compile Include="switching\JavaHome.cs" />
     <Compile Include="switching\Switcher.cs" />
@@ -174,6 +180,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="switching\cfg\ProjectSubsDriveSettings.resx">
       <DependentUpon>ProjectSubsDriveSettings.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="switching\cfg\FrmDatabaseServices.resx">
+      <DependentUpon>FrmDatabaseServices.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="LICENSE" />
     <None Include="packages.config" />

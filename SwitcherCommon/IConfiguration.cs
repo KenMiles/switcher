@@ -1,4 +1,6 @@
-﻿namespace SwitcherCommon
+﻿using System.Collections.Generic;
+
+namespace SwitcherCommon
 {
     public interface IConfiguration
     {
@@ -15,6 +17,8 @@
 
         string[] ProjectNames { get; }
         string CurrentProject { get; set; }
+
+        Dictionary<string, string> IgnoreServices();
 
     }
 }

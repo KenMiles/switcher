@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using SwitcherCommon;
+using SwitcherUi.switching;
 
 namespace SwitcherUi
 {
@@ -17,8 +19,15 @@ namespace SwitcherUi
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new SwitcherMainForm());
-            //Application.Run(new ProjectConfigForm());
+            var cfg = new CommandArguments(Environment.GetCommandLineArgs());
+            if (cfg.ArgumentExists("test-cfg"))
+            {
+                Application.Run(new ProjectConfigForm());
+            }
+            else
+            {
+                Application.Run(new SwitcherMainForm());
+            }
         }
     }
 }

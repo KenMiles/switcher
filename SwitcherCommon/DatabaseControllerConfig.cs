@@ -24,16 +24,18 @@ namespace SwitcherCommon
         }
 
         private static readonly ILog Log = LogManager.GetLogger(typeof(DatabaseControllerConfig));
-        private readonly Dictionary<string, string[]> _databases;
-        public int Timeout { get; }
+        public int Timeout { get; private set; }
+        public Dictionary<string, string[]> DatabaseAndServices { get; private set; }
 
         private const string TimeoutValueName = "Timeout";
         private const string SectionName = "Databases";
-        public DatabaseControllerConfig(IConfiguration config)
+
+        private readonly IConfiguration _config;
+
+        private void ReadConfig(Dictionary<string, string> cfg)
         {
-            var cfg = config.GetSwitcherCfg(SectionName).Values;
             Log.Debug("CFG: " + string.Join(", ", cfg.Keys));
-            _databases =
+            DatabaseAndServices =
                 cfg.Where(
                     c =>
                         !string.IsNullOrWhiteSpace(c.Value) &&
@@ -41,19 +43,34 @@ namespace SwitcherCommon
                     )
                     .ToDictionary(k => k.Key, v => v.Value.Split(';').Where(w => !string.IsNullOrWhiteSpace(w)).ToArray(), StringComparer.InvariantCultureIgnoreCase);
             Timeout = IntToStr(cfg.ContainsKey(TimeoutValueName) ? cfg[TimeoutValueName] : "", 30);
+        }
 
+        public DatabaseControllerConfig(IConfiguration config)
+        {
+            _config = config;
+            ReadConfig(config.GetSwitcherCfg(SectionName).Values);
+
+        }
+
+        public void SaveCfg(int timeOut, Dictionary<string, string[]> database)
+        {
+            var cfg = database.ToDictionary(v => v.Key, v => string.Join(";", v.Value), StringComparer.InvariantCultureIgnoreCase);
+            cfg[TimeoutValueName] = Math.Min(600, Math.Max(10, timeOut)).ToString();
+            _config.SetSwitcherCfg(SectionName, new Settings(cfg));
+            ReadConfig(cfg);
         }
 
         public bool DatabaseKnown(string database)
         {
-            return _databases.ContainsKey(database);
+            return DatabaseAndServices.ContainsKey(database);
         }
 
         public string[] DatabaseServices(string database)
         {
-            return _databases.ContainsKey(database) ? _databases[database] : new string[0];
+            return DatabaseAndServices.ContainsKey(database) ? DatabaseAndServices[database] : new string[0];
         }
 
-        public string[] Databases => _databases.Keys.ToArray();
+        public string[] Databases => DatabaseAndServices.Keys.ToArray();
+
     }
 }

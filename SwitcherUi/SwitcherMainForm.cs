@@ -120,7 +120,6 @@ namespace SwitcherUi
         {
             _logic.OnSetup();
             _logic.CheckCanSwitch();
-
         }
 
         private void timerCheckStatus_Tick(object sender, EventArgs e)

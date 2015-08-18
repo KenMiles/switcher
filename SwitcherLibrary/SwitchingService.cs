@@ -38,5 +38,10 @@ namespace SwitcherLibrary
             var dbController = new DatabaseController(Config());
             return dbController.StopDatabase(database);
         }
+
+        public WindowsServiceDescription[] Services()
+        {
+            return WindowsServiceDescription.Load(Config());
+        }
     }
 }

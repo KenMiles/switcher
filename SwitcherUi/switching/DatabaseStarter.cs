@@ -44,8 +44,8 @@ namespace SwitcherUi.switching
         {
             return new ConfigMenuOptions
             {
-                MenuText = "Database Start Config (TBI)",
-                CreateConfigForm = null //TODO DB Config (should filter out creating menus) - c => new FrmJavaHomeCfg(c)
+                MenuText = "Database Start Config",
+                CreateConfigForm = c => new FrmDatabaseServices(c)
             };
         }
 

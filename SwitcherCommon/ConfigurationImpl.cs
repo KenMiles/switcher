@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using IniParser;
 using IniParser.Model;
+using log4net;
 
 namespace SwitcherCommon
 {
@@ -11,6 +12,7 @@ namespace SwitcherCommon
     delegate void Update(IniData ini);
     public class ConfigurationImpl : IConfiguration
     {
+        private static readonly ILog Log = LogManager.GetLogger(typeof(ConfigurationImpl));
         private readonly FileIniDataParser _parser = new FileIniDataParser();
         private readonly string _iniFileName;
         private IniData _ini;
@@ -133,6 +135,47 @@ namespace SwitcherCommon
                  });
             }
         }
+
+        private string IgnoreServicesFileName(string dir)
+        {
+            var fileName = Path.Combine(dir, "ignoreservices.cfg");
+            return File.Exists(fileName) ? fileName : "";
+        }
+
+        private string IgnoreServicesFileName()
+        {
+            var paths = new []
+            {
+                IgnoreServicesFileName(Path.GetDirectoryName(_iniFileName)),
+                    IgnoreServicesFileName(Path.GetDirectoryName(DefaultConfigFileName()))
+            };
+            return paths.FirstOrDefault(p => !string.IsNullOrWhiteSpace(p));
+        }
+
+        private Dictionary<string, string> _ignoreServices;
+        public Dictionary<string, string> LoadIgnoreServices()
+        {
+            var fileName = IgnoreServicesFileName();
+            try
+            {
+                if (string.IsNullOrWhiteSpace(fileName)) return new Dictionary<string, string>();
+                var ini = _parser.ReadFile(fileName);
+                if (!ini.Sections.ContainsSection("Ignore Services")) return new Dictionary<string, string>();
+                return ini.Sections["Ignore Services"].ToDictionary(k => k.KeyName, v => v.Value,
+                    StringComparer.CurrentCultureIgnoreCase);
+            }
+            catch (Exception e)
+            {
+                Log.Error($"Reading Ignore Services from '{fileName}' threw Exception", e);
+            }
+            return new Dictionary<string, string>();
+        }
+
+        public Dictionary<string, string> IgnoreServices()
+        {
+            return _ignoreServices = _ignoreServices ?? LoadIgnoreServices();
+        }
+
 
         private const string ProjectPrefix = "Project ";
         public Settings this[string projectName]

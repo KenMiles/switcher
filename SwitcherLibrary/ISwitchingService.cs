@@ -4,6 +4,7 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.Text;
+using SwitcherCommon;
 
 namespace SwitcherLibrary
 {
@@ -22,5 +23,8 @@ namespace SwitcherLibrary
 
         [OperationContract]
         string[] StopDatabase(string database);
+
+        [OperationContract]
+        WindowsServiceDescription[] Services();
     }
 }
