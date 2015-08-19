@@ -49,6 +49,7 @@
             this.timerSwitch = new System.Windows.Forms.Timer(this.components);
             this.btnCopy = new System.Windows.Forms.Button();
             this.btnNew = new System.Windows.Forms.Button();
+            this.btnDelete = new System.Windows.Forms.Button();
             this.contextMenuStrip1.SuspendLayout();
             this.tabControlLogs.SuspendLayout();
             this.pageIssues.SuspendLayout();
@@ -248,11 +249,24 @@
             this.btnNew.UseVisualStyleBackColor = false;
             this.btnNew.Click += new System.EventHandler(this.btnNew_Click);
             // 
+            // btnDelete
+            // 
+            this.btnDelete.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.btnDelete.Location = new System.Drawing.Point(625, 40);
+            this.btnDelete.Margin = new System.Windows.Forms.Padding(2);
+            this.btnDelete.Name = "btnDelete";
+            this.btnDelete.Size = new System.Drawing.Size(79, 21);
+            this.btnDelete.TabIndex = 14;
+            this.btnDelete.Text = "Delete Project";
+            this.btnDelete.UseVisualStyleBackColor = false;
+            this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
+            // 
             // SwitcherMainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(856, 496);
+            this.Controls.Add(this.btnDelete);
             this.Controls.Add(this.btnNew);
             this.Controls.Add(this.btnCopy);
             this.Controls.Add(this.btnConfigureProject);
@@ -299,6 +313,7 @@
         private System.Windows.Forms.ToolStripMenuItem shutLocalDatabasesToolStripMenuItem;
         private System.Windows.Forms.Button btnCopy;
         private System.Windows.Forms.Button btnNew;
+        private System.Windows.Forms.Button btnDelete;
     }
 }
 

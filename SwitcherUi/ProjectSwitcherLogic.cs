@@ -145,11 +145,10 @@ namespace SwitcherUi
         private Project _current;
 
         public void OnSetup() {
-            var current = _config.CurrentProject;
-            _userFeedback.DisplayCurrentProject(current);
             _userFeedback.AddConfigMenuItems(_canSwitch.ConfigMenuOptions().Concat(_switcher.ConfigMenuOptions()));
-            var projects = AllProjects();
-            _current = Selected(projects, current);
+            var projects = AllProjects().ToArray();
+            _current = Selected(projects, _config.CurrentProject);
+            _userFeedback.DisplayCurrentProject(_current?.DisplayName ?? "No Project Selected");
             _userFeedback.ListProjects(projects, _current);
             if (_current != null && _args.ArgumentExists("switch")) _userFeedback.StartAutoSwitchAndClose();
         }
@@ -189,7 +188,7 @@ namespace SwitcherUi
             if (soureProject != null && project != soureProject) _projectManager.RefreshProject(soureProject);
             if (!_userFeedback.ConfigureProject(_switcher.ProjectConfigOptions(), project, soureProject)) return true;
             _projectManager.RefreshProject(project);
-            var projs = _projectManager.Projects();
+            var projs = AllProjects();
             var selected = projs.FirstOrDefault(p => p.Name == project.Name) ?? projs.FirstOrDefault(p => p.Name == soureProject?.Name);
             _userFeedback.ListProjects(projs, selected);
             if (!isCurrent
@@ -233,5 +232,19 @@ namespace SwitcherUi
 
         }
 
+        public void DeleteProject(Project project)
+        {
+            if (!CheckProjectSelected(project, "Delete Project")) return;
+            bool isCurrent = project.Name == _config.CurrentProject;
+            if (isCurrent && _userFeedback.WarningAsk("Deleted Current Project", "You have selected to Delete Current Project")) return;
+            project.Deleted = true;
+            _config[project] = project.Settings;
+            if (isCurrent)
+            {
+                _userFeedback.DisplayCurrentProject("Nothing selected");
+                _current = null;
+            }
+            _userFeedback.ListProjects(AllProjects(), _current);
+        }
     }
 }

@@ -80,8 +80,9 @@ namespace SwitcherUi.switching.cfg
         {
             var switcher = new JavaHome(config);
             _availableJdks = switcher.LatestJdk;
+            var newestVersion = _availableJdks.Values.OrderByDescending(j => j.MajorVersionPt2).FirstOrDefault();
             _projectPreferredJdks = projectSettings.ArrayValue("JAVA");
-            _projectPreferredJdkVersion = projectSettings.Value("JAVA Version", "8");
+            _projectPreferredJdkVersion = projectSettings.Value("JAVA Version", newestVersion == null ? "8" :newestVersion.MajorVersion);
             lvDesiredJavaVersion.Items.AddRange(_projectPreferredJdks.Select(JdkListItem).ToArray());
             cbPreferredJavaVersion.Items.AddRange(JavaVersion);
             cbPreferredJavaVersion.SelectedIndex = cbPreferredJavaVersion.Items.IndexOf((_projectPreferredJdkVersion));
@@ -172,6 +173,7 @@ namespace SwitcherUi.switching.cfg
             lvDesiredJavaVersion.Items.AddRange(newValues.Select(JdkListItem).ToArray());
             _lastSelected = CurrentlySelected();
             if (selected >= 0) lvDesiredJavaVersion.Items[selected].Selected = true;
+            SetUpAvailableToAddCombo();
         }
     }
 }

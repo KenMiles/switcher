@@ -20,7 +20,7 @@ namespace SwitcherUi
     {
         public void DisplayCurrentProject(string project)
         {
-            Text = "Current Project " + project;
+            Text = "Current Project: " + project;
         }
 
         private readonly string[] _seperator = new[] { "", "----------", "" };
@@ -204,6 +204,11 @@ namespace SwitcherUi
                 return (ToolStripItem)menuEntry;
             });
             settingsToolStripMenuItem.DropDownItems.AddRange(menuEntries.ToArray());
+        }
+
+        private void btnDelete_Click(object sender, EventArgs e)
+        {
+            _logic.DeleteProject((Project)cbProject.SelectedItem);
         }
     }
 

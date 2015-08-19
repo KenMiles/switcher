@@ -137,6 +137,7 @@ namespace SwitcherUi
             var projectSettings = _config[_project];
             _projectConfigItems.ForEach(pi => pi.SaveConfig(projectSettings, _config, _project));
             projectSettings.Values[Project.DisplayNameSettingName] = edtDisplayName.Text.Trim();
+            projectSettings.Values[Project.DeletedSettingName] = "N";
             _config[_project] = projectSettings;
             DialogResult = DialogResult.OK;
         }

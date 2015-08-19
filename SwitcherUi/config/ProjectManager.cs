@@ -34,7 +34,7 @@ namespace SwitcherUi.config
 
         public Project[] Projects()
         {
-            return _config.ProjectNames.Select(Project).OrderBy(p => p.DisplayName.ToUpper()).ToArray();
+            return _config.ProjectNames.Select(Project).Where(p => !p.Deleted).OrderBy(p => p.DisplayName.ToUpper()).ToArray();
         }
 
         public Dictionary<string, string> ProjectNames()
