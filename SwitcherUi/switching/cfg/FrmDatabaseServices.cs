@@ -79,6 +79,8 @@ namespace SwitcherUi.switching.cfg
         {
             DisplayDatabases();
             SetupServicesCombos(null);
+            var args = new CommandArguments(Environment.GetCommandLineArgs());
+            btnCopyServices.Visible = args.ArgumentExists("svc-copy");
         }
 
         private ListViewItem Listitem(WindowsServiceDescription serviceDesc)
@@ -202,6 +204,7 @@ namespace SwitcherUi.switching.cfg
             _editing = editing;
             lblEditing.Text = $" (editing {_editing.Name}";
             btnAdd.Text = "Copy";
+            btnUpdate.Enabled = true;
         }
 
         private void lvDatabase_SelectedIndexChanged(object sender, EventArgs e)
@@ -217,7 +220,8 @@ namespace SwitcherUi.switching.cfg
             _editing = null;
             SetupServicesCombos(null);
             lvServices.Items.Clear();
-            btnAdd.Text = "New";
+            btnAdd.Text = "Add";
+            btnUpdate.Enabled = false;
             lblEditing.Text = "(new)";
         }
 
@@ -331,6 +335,13 @@ namespace SwitcherUi.switching.cfg
         {
             if (!Modal) Close();
             DialogResult = DialogResult.Cancel;
+        }
+
+        private void btnCopyServices_Click(object sender, EventArgs e)
+        {
+            var svcsUsed = _databases.Select(c => c.Services).SelectMany(c => c).Distinct();
+            var asStrs = _services.Values.Select(s => $"{s.Name}={s.DisplayName}");
+            Clipboard.SetText(string.Join("\r\n", asStrs));
         }
     }
 }
